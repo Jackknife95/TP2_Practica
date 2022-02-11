@@ -4,6 +4,10 @@ import java.util.List;
 
 public class MoveAllStrategy implements DequeuingStrategy {
 
+	MoveAllStrategy(){
+		
+	}
+	
 	@Override
 	public List<Vehicle> dequeue(List<Vehicle> q) {
 		// TODO Auto-generated method stub
