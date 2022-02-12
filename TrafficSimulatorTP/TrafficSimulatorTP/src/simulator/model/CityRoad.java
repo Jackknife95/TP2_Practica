@@ -9,13 +9,12 @@ public class CityRoad extends Road{
 	@Override
 	void reduceTotalContamination() {
 		// TODO Auto-generated method stub
-		String we =super.getWeather().toString().toUpperCase();
-		int cont = super.getTotalCO2();
+		String we =getWeather().toString().toUpperCase();
 		if(we.equals("WINDY")||we.equals("STORM")) {
-			reduceContamination(Math.min(cont-10, 0));
+			reduceContamination(10);
 		}
 		else {
-			reduceContamination(Math.min(cont-2, 0));
+			reduceContamination(2);
 		}
 		
 		

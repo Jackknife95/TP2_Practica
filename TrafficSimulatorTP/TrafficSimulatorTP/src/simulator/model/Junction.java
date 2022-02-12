@@ -7,12 +7,12 @@ import org.json.JSONObject;
 
 public class Junction extends SimulatedObject {
 
-	private List<Road> carreteras_entrantes; //Lista de carreteras que entran al cruce
-	private Map<Road, List<Vehicle>> lista_vehiculo; //Se utiliza para realizar la búsqueda de una cola de forma eficiente (opcional)
-	private Map<Junction, Road> carreteras_salientes; //Mapa para saber que carretera tomar para llegar a un determinado cruce
-	private List<List<Vehicle>> lista_cola;  // Lista de cola para cada carretera entrante
-	private int traffic_lights; // índice de carretera entrante verde, -1 significa que están todos a rojo
-	private int ultimo_paso_cambio_semaforo = 0;
+	private List<Road> carreterasEntrantes; //Lista de carreteras que entran al cruce
+	private Map<Road, List<Vehicle>> listaVehiculo; //Se utiliza para realizar la búsqueda de una cola de forma eficiente (opcional)
+	private Map<Junction, Road> carreterasSalientes; //Mapa para saber que carretera tomar para llegar a un determinado cruce
+	private List<List<Vehicle>> listaCola;  // Lista de cola para cada carretera entrante
+	private int trafficLights; // índice de carretera entrante verde, -1 significa que están todos a rojo
+	private int ultimoCambioSemaforo = 0;
 	private int x, y;
 	private LightSwitchingStrategy lsStrategy;
 	private DequeuingStrategy dqStrategy;
@@ -36,20 +36,21 @@ public class Junction extends SimulatedObject {
 	}
 	
 	void addIncommingRoad(Road r) {		
-		//TODO
+		
+		carreterasEntrantes.add(r);
 		
 	}
 	
 	void addOutGoingRoad(Road r) {		
-		//TODO
+		carreterasSalientes.put(this,r);
 	}
 	
 	void enter(Vehicle v) {
-		//TODO
+		//TODO 
 	}
 	
 	Road roadTo(Junction j) {
-		return carreteras_salientes.get(j);
+		return carreterasSalientes.get(j);
 	}
 	
 	
