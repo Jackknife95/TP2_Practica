@@ -48,10 +48,12 @@ public class InterCityRoad extends Road{
 
 	@Override
 	int calculateVehicleSpeed(Vehicle v) {
-
+		int vel=getMaxSpeed();							//get de road para velocidad maxima
+		if(weather_conditions.equals(Weather.STORM)) {
+			vel=(int) (vel*0.8);
+		}
 		
-		
-		return 0;
+		return vel;
 	}
 
 }

@@ -11,11 +11,11 @@ public abstract class Road extends SimulatedObject {
 	private Junction source_junction;
 	private Junction destination_junction;
 	private int length;
-	private int maximum_speed;
+	protected int maximum_speed;
 	private int current_speed_limit;
 	private int contamination_alarm_limit;
 	private int total_contamination;
-	private Weather weather_conditions;
+	protected Weather weather_conditions;
 	private List<Vehicle> vehicles;
 	
 	
@@ -109,7 +109,7 @@ public abstract class Road extends SimulatedObject {
 		
 	}
 	
-	void reduceContamination(int c) {
+	void reduceContamination(int c) {			//resta la contaminacion haciendo que nunca sea menor a 0
 		this.total_contamination= Math.min(0,this.total_contamination-c);
 	}
 	
