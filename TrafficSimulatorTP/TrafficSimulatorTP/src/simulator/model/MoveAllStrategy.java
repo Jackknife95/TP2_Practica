@@ -8,10 +8,12 @@ public class MoveAllStrategy implements DequeuingStrategy {
 		
 	}
 	
+	//TODO comprobar que funcionaria el metodo
+	
 	@Override
 	public List<Vehicle> dequeue(List<Vehicle> q) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Vehicle> v= q;
+		return v;
 	}
 
 }
