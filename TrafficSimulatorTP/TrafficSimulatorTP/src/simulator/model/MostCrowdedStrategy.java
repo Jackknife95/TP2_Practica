@@ -18,6 +18,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 		}
 		else {
 			result =-1;
+				//TODO cambiar por busqueda circular 
 			
 			for(List<Vehicle> lista: qs ) {
 				if(lista.size()>result) {
@@ -27,7 +28,6 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 			
 		}
 		
-		/*------------------------------- TODO FALTA TERMINARLO------------------*/
 		return result;
 	}
 
