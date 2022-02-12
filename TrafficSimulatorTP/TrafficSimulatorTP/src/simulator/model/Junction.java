@@ -62,7 +62,7 @@ public class Junction extends SimulatedObject {
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
+		//TODO hacer el metodo
 		return null;
 	}
 
