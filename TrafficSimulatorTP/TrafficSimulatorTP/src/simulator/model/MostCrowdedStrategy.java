@@ -9,26 +9,49 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 	}
 
 	@Override
-	public int chooseNextGreen(List<Road> roads, List<List<Vehicle>> qs, int currGreen, int lastSwitchingTime,
-		int currTime) {
-		int result=-1;
+	public int chooseNextGreen(List<Road> roads, List<List<Vehicle>> qs, int currGreen, int lastSwitchingTime, int currTime) {
+		int ret = -1;
 		
-		if (currTime-lastSwitchingTime <timeSlot) {
-			result= currGreen;
-		}
-		else {
-			result =-1;
-				//TODO cambiar por busqueda circular 
-			
-			for(List<Vehicle> lista: qs ) {
-				if(lista.size()>result) {
-					result= qs.indexOf(lista);
+		if(roads.isEmpty()) {
+			ret = -1;
+		}		
+		else if(currGreen == -1) {
+			for(List<Vehicle> lista : qs) {
+				if(lista.size() > ret) {
+					ret = qs.indexOf(lista);
 				}
 			}
+		}
+		else if(currTime - lastSwitchingTime < timeSlot) {
+			ret = currGreen;
+		}
+		else {
+			
+			ret = searchNextGreen(qs, (currGreen + 1) % roads.size());
 			
 		}
 		
-		return result;
+		return ret;
+	}
+	
+	
+	private int searchNextGreen(List<List<Vehicle>> qs, int startIndex ) {
+		
+		int max_index = startIndex;
+		int max = qs.get(startIndex).size(); 
+		
+		int i = (startIndex + 1) % qs.size();
+		
+		while(i != startIndex) {
+			if(qs.get(i).size() > max) {
+				max = qs.get(i).size();
+				max_index = i;
+			}	
+			
+			i = (i + 1) % qs.size();
+		}
+	
+		return max_index;		
 	}
 
 }
