@@ -1,6 +1,8 @@
 package simulator.model;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,86 +19,148 @@ public class RoadMap {
 	private Map<String,Vehicle> mapaVehiculos;
 	
 	public RoadMap(){
-		List<Junction>listaCruces=this.listaCruces;
-		List<Road>listaCarreteras=this.listaCarreteras;
-		List<Vehicle> listaVehiculos=this.listaVehiculos;
-		Map<String,Junction> mapaCruces=this.mapaCruces;
-		Map<String,Road>mapaCarreteras=this.mapaCarreteras;
-		Map<String,Vehicle> mapaVehiculos=this.mapaVehiculos;
+		this.listaCruces = new LinkedList<Junction>();
+		this.listaCarreteras = new LinkedList<Road>();
+		this.listaVehiculos = new LinkedList<Vehicle>();
+		this.mapaCruces = new HashMap<String, Junction>();
+		this.mapaCarreteras = new HashMap<String, Road>();
+		this.mapaVehiculos = new HashMap<String, Vehicle>();
 	}
 	
-	void reset() {
-		listaCruces.removeAll(listaCruces);
-		listaCarreteras.removeAll(listaCarreteras);
-		listaVehiculos.removeAll(listaVehiculos);
-		
+	void reset() {	
+		listaCruces.clear();
+		listaCarreteras.clear();
+		listaVehiculos.clear();	
 		mapaCruces.clear();
 		mapaCarreteras.clear();
 		mapaVehiculos.clear();
 	}
 	
 	void addJunction(Junction j) {
+		
 		listaCruces.add(j);
+		
+		String key = j.getId();		
+		if(!mapaCruces.containsKey(key)){
+			mapaCruces.put(key, j);
+		}
 	}
 	
 	void addRoad(Road r) {
+		
 		listaCarreteras.add(r);
+				
+		String id = r.getId();
+		
+		if(!mapaCarreteras.containsKey(id) && mapaCruces.containsValue(r.getSrc()) && mapaCruces.containsValue(r.getDest())) {
+			mapaCarreteras.put(id, r);
+		}
+		else {
+			throw new IllegalArgumentException("Excepción addRoad: carretera ya existente o cruces no contenidos en el mapa de cruces");
+		}
 	}
+	
 	
 	void addVehicle(Vehicle v) {
 		listaVehiculos.add(v);
+		
+		String id = v.getId();
+		
+		if(!mapaVehiculos.containsKey(id)) {
+			
+			int i = 0;
+			boolean validItinerary = true;
+			List<Junction> itinerary = new LinkedList<Junction>(v.getItinerary());
+			
+			while (i < itinerary.size() - 1 && validItinerary) {
+				
+				if(itinerary.get(i).roadTo(itinerary.get(i+1)) == null) {
+					validItinerary = false;
+				}				
+				i++;
+			}
+			
+			if(validItinerary) {
+				mapaVehiculos.put(id, v);
+			}
+			else {
+				throw new IllegalArgumentException("Excepción addVehicle: el itinerario es inválido");
+			}
+			
+		}
+		else {
+			throw new IllegalArgumentException("Excepción addVehicle: ya existe un vehículo con ese identificador");
+		}
+			
+	}
+	
+	
+	public Junction getJuction(String s) {
+		
+		if(mapaCruces.containsKey(s)) {
+			return mapaCruces.get(s);
+		}
+		
+		return null;
+	}
+	
+	
+	public Road getRoad(String s) {
+		
+		if(mapaCarreteras.containsKey(s)) {
+			return mapaCarreteras.get(s);
+		}
+
+		return null;
 	}
 	
 	public Vehicle getVehicle(String s) {
-		return mapaVehiculos.get(s);
+		
+		if(mapaVehiculos.containsKey(s)) {
+			return mapaVehiculos.get(s);
+		}
+		
+		return null;
 	}
 	
 	public List<Vehicle> getVehicles(){
-		List<Vehicle> lv = listaVehiculos;
-		return Collections.unmodifiableList(lv);
-	}
-	
-	public Road getRoad(String s) {
-		return mapaCarreteras.get(s);
+		
+		return Collections.unmodifiableList(new LinkedList<Vehicle>(listaVehiculos));
 	}
 	
 	public List<Road> getRoads(){
-		List<Road> lr = listaCarreteras;
-		return Collections.unmodifiableList(lr);
-	}
-	
-	public Junction getJuction(String s) {
-		return mapaCruces.get(s);
+
+		return Collections.unmodifiableList(new LinkedList<Road>(listaCarreteras));
 	}
 	
 	public List<Junction> getJunctions(){
-		List<Junction> lj = listaCruces;
-		return Collections.unmodifiableList(lj);
+
+		return Collections.unmodifiableList(new LinkedList<Junction>(listaCruces));
 	}
 	
+	
 	public JSONObject report() {
-		JSONObject jo = new JSONObject();
-		
+		JSONObject jo = new JSONObject();	
 		JSONArray ja = new JSONArray();
 		
-		for(Junction x : listaCruces) {
-			ja.put(x.report());
-		}
-		
+		for(Junction j : listaCruces) {
+			ja.put(j.report());
+		}		
 		jo.put("junctions",ja);
 		
+		
 		ja= new JSONArray();
 		
-		for(Road x : listaCarreteras) {
-			ja.put(x.report());
-		}
-		
+		for(Road r : listaCarreteras) {
+			ja.put(r.report());
+		}		
 		jo.put("road", ja);
 		
+		
 		ja= new JSONArray();
 		
-		for(Vehicle x : listaVehiculos) {
-			ja.put(x.report());
+		for(Vehicle v : listaVehiculos) {
+			ja.put(v.report());
 		}
 		jo.put("vehicles", ja);
 		
