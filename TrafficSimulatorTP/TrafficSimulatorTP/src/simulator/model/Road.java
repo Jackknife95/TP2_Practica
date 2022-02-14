@@ -1,6 +1,7 @@
 package simulator.model;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -17,7 +18,6 @@ public abstract class Road extends SimulatedObject {
 	private int total_contamination;
 	protected Weather weather_conditions;
 	private List<Vehicle> vehicles;
-	
 	
 	
 	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) { 
@@ -58,6 +58,23 @@ public abstract class Road extends SimulatedObject {
 		}
 	
 	}
+	
+	
+	static protected Comparator<Vehicle> _vehiclesComparator = new Comparator<Vehicle>() {
+		
+		@Override
+		public int compare(Vehicle v1, Vehicle v2) {
+			if(v1.getLocation() < v2.getLocation()) {
+				return 1;
+			}
+			else if (v1.getLocation() > v2.getLocation()) {
+				return -1;
+			}
+			
+			return 0;
+		}
+	};
+	
 	
 	/*---------------------------------Public Getter Methods-------------------------------------*/
 	
@@ -153,7 +170,7 @@ public abstract class Road extends SimulatedObject {
 			v.advance(time);
 		}
 			
-		Collections.sort(vehicles);
+		vehicles.sort(_vehiclesComparator);
 	}
 
 	@Override
