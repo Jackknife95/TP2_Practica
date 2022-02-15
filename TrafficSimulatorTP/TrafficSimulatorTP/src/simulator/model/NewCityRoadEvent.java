@@ -1,6 +1,6 @@
 package simulator.model;
 
-public class NewCityRoadEvent extends Event{
+public class NewCityRoadEvent extends NewRoadEvent{
 	
 	private String id;
 	private String srcJun;
@@ -12,15 +12,7 @@ public class NewCityRoadEvent extends Event{
 	
 	
 	public NewCityRoadEvent(int time, String id, String srcJun, String destJunc, int length, int co2Limit, int maxSpeed, Weather weather){
-				super(time);
-				
-				this.id=id;
-				this.srcJun=srcJun;
-				this.destJunc=destJunc;
-				this.length=length;
-				this.co2Limit= co2Limit;
-				this.maxSpeed= maxSpeed;
-				this.weather= weather;
+				super(time,id,srcJun,destJunc, length, co2Limit, maxSpeed, weather);
 			}
 
 	@Override
