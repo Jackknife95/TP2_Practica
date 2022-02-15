@@ -32,7 +32,7 @@ public class NewVehicleEvent extends Event {
 						//TODO exception "ALARMA, ITINERARIO NO VALIDO XD"
 					}
 			}
-			map.addVehicle(new Vehicle(id, contClass, contClass,listJun));
+			map.addVehicle(new Vehicle(id, maxSpeed, contClass,listJun));
 		}
 	}
 
