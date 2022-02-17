@@ -16,7 +16,7 @@ public class NewJunctionEvent extends Event {
 			map.addJunction(j);
 		}
 		else {
-			//TODO posible excepcion por repeticion?
+			throw new IllegalArgumentException("The Junction is already in the RoadMap");
 		}
 	}
 }

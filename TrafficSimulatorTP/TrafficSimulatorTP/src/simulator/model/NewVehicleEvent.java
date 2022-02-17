@@ -11,7 +11,6 @@ public class NewVehicleEvent extends Event {
 	
 	NewVehicleEvent(int time, String id, int maxSpeed, int contClass, List<String> itinerary) {
 		super(time);
-		// TODO Auto-generated constructor stub
 		this.id= id;
 		this.maxSpeed=maxSpeed;
 		this.contClass=contClass;
@@ -20,7 +19,6 @@ public class NewVehicleEvent extends Event {
 
 	@Override
 	void execute(RoadMap map) {
-		// TODO Auto-generated method stub
 		if(map.getVehicle(id)==null) {
 			List<Junction> listJun= new LinkedList<Junction>();
 			for(int i=0;i<map.getJunctions().size();i++) {
@@ -29,7 +27,7 @@ public class NewVehicleEvent extends Event {
 						listJun.add(j);
 					}
 					else {
-						//TODO exception "ALARMA, ITINERARIO NO VALIDO XD"
+						throw new IllegalArgumentException("Invalid Itinerary");
 					}
 			}
 			Vehicle v = new Vehicle(id, maxSpeed, contClass,listJun);
