@@ -21,7 +21,7 @@ public class CityRoad extends Road{
 
 	@Override
 	void updateSpeedLimit() {
-		//no hace nada, esta de adorno :3
+		//no hace nada, esta de adorno (^3^)
 	}
 
 	@Override
