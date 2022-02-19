@@ -9,39 +9,33 @@ public class NewSetContClassEvent extends Event{
 
 	List<Pair<String,Integer>> c;
 	
-	NewSetContClassEvent(int time, List<Pair<String,Integer>>cs){
+	NewSetContClassEvent(int time, List<Pair<String,Integer>> cs){
 		super(time);
 		
-		if(cs.equals(null)) {
-
-			throw new IllegalArgumentException("Invalid List of Pair<String,Integer>");
-		}
-		
-		else {
-			c = new LinkedList<Pair<String,Integer>>();
-			
+		if(cs != null) {			
+			c = new LinkedList<Pair<String,Integer>>();			
 			for( Pair< String, Integer> par : cs) {
 				c.add(par);
 			}
+		}		
+		else {
+			throw new IllegalArgumentException("Invalid List of Pair<String,Integer>");
 		}
 	}
 
 	@Override
 	void execute(RoadMap map) {
-		Vehicle v;
 		
 		for(Pair<String,Integer> par : c) {
 			
-			v =	map.getVehicle(par.getFirst());
+			Vehicle v =	map.getVehicle(par.getFirst());
 			
-			if (v==null) {
+			if (v == null) {
 				throw new IllegalArgumentException("Invalid Vehicle to set ContClass");
 			}
-			
 			else {
 				v.setContClass(par.getSecond());
-			}
-			
+			}			
 		}
 	}
 
