@@ -18,21 +18,7 @@ public abstract class Event implements Comparable<Event> {
 	@Override
 	public int compareTo(Event o) {
 		
-		int i= 2; // iniciamos a un valor que no corresponda a nada 
-		
-		if(this._time<o._time) {
-			i= -1;						// Evento planeado en el futuro
-		}
-		
-		else if(this._time>o._time) {
-			i=1;						// Evento hecho en el pasado
-		}
-		
-		else {
-			i= 0;						//hora de hace el evento
-		}
-		
-		return i;
+		return this._time - o._time;
 	}
 
 	abstract void execute(RoadMap map);
