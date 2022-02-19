@@ -13,42 +13,34 @@ public class SetWeatherEvent extends Event{
 		
 		super(time);
 		
-		if(ws.equals(null)) {
-			
-			throw new IllegalArgumentException("Invalid List of Pair<String,Weather>");
-			
-		}
-		
-		else {
-			
-			w= new LinkedList<Pair<String,Weather>>();
+		if(ws != null) {
+			w = new LinkedList<Pair<String,Weather>>();
 			
 			for(Pair<String,Weather> par : ws) {
 				w.add(par);
 			}
+			
+		}		
+		else {		
+			throw new IllegalArgumentException("Invalid List of Pair<String,Weather>");
 		}
 		
 	}
 
 	@Override
 	void execute(RoadMap map) {
-		
-		Road r;
-		
+				
 		for(Pair<String,Weather> par : w) {
 			
-			r =	map.getRoad(par.getFirst());
+			Road r = map.getRoad(par.getFirst());
 			
-			if (r==null) {
+			if (r == null) {
 				throw new IllegalArgumentException("Invalid Road to set Weather");
-			}
-			
+			}			
 			else {
 				r.setWeather(par.getSecond());
-			}
-			
-		}
-		
+			}			
+		}		
 	}
 
 }
