@@ -3,7 +3,9 @@ package simulator.model;
 import java.util.List;
 
 public class MostCrowdedStrategy implements LightSwitchingStrategy {
+	
 	 private int timeSlot;
+	 
 	MostCrowdedStrategy(int timeSlot){
 		this.timeSlot= timeSlot;
 	}
@@ -15,9 +17,11 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 		if(roads.isEmpty()) {
 			ret = -1;
 		}		
-		else if(currGreen == -1) {
+		else if(currGreen == -1) {		
+			int max = 0;
 			for(List<Vehicle> lista : qs) {
-				if(lista.size() > ret) {
+				if(lista.size() > max) {
+					max = lista.size();
 					ret = qs.indexOf(lista);
 				}
 			}
@@ -40,7 +44,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 		int max_index = startIndex;
 		int max = qs.get(startIndex).size(); 
 		
-		int i = (startIndex + 1) % qs.size();
+		int i = (startIndex + 1)% qs.size();
 		
 		while(i != startIndex) {
 			if(qs.get(i).size() > max) {

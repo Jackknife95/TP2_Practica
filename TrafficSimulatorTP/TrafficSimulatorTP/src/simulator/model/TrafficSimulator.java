@@ -1,5 +1,7 @@
 package simulator.model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -12,7 +14,7 @@ public class TrafficSimulator {
 	private List<Event> listaEventos;
 	private int time; // Paso de simulación
 	
-	public TrafficSimulator() {
+	public TrafficSimulator() { 
 		this.mapaCarreteras = new RoadMap();
 		this.listaEventos = new SortedArrayList<Event>();
 		this.time = 0;
@@ -26,10 +28,10 @@ public class TrafficSimulator {
 	public void advance() {
 		this.time++;
 			
-		for(Event e : listaEventos) {
-			if(e.getTime() == time) {
-				e.execute(mapaCarreteras);
-				listaEventos.remove(e);
+		for(Iterator<Event> it = listaEventos.iterator(); it.hasNext();) {
+			if(it.next().getTime() == time) {
+				it.next().execute(mapaCarreteras);
+				it.remove();
 			}
 		}
 		

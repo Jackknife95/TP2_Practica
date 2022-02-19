@@ -9,9 +9,9 @@ public class NewCityRoadEvent extends NewRoadEvent{
 	@Override
 	void execute(RoadMap map) {
 		
-		Junction dJ = map.getJuction(destJunc);
+		Junction dJ = map.getJunction(destJunc);
 		
-		Junction sJ = map.getJuction(srcJun);
+		Junction sJ = map.getJunction(srcJun);
 				
 		if(dJ!= null && sJ != null) {
 			CityRoad road = new CityRoad(id,sJ,dJ,length,co2Limit,maxSpeed,weather);
