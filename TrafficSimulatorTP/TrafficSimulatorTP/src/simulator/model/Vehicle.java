@@ -88,18 +88,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		this.status = status;
 	}
 
-	private void setRoad(Road road) {
-		this.road = road;
-	}
-
 	private void setLocation(int location) {
 		this.location = location;
-	}
-
-	private void setTotalTravelledDistance(int totalTravelledDistance) {
-		this.totalTravelledDistance = totalTravelledDistance;
-	}
-	
+	}	
 	
 	/*---------------------------------Public Getter Methods-------------------------------------*/
 	
