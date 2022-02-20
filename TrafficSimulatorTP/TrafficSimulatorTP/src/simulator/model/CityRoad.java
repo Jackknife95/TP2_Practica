@@ -9,9 +9,9 @@ public class CityRoad extends Road{
 	@Override
 	void reduceTotalContamination() {
 
-		String we = getWeather().toString();
+		Weather we = getWeather();
 		
-		if(we.equals("WINDY")||we.equals("STORM")) {
+		if(we.equals(Weather.WINDY)||we.equals(Weather.STORM)) {
 			reduceContamination(10);
 		}
 		else {

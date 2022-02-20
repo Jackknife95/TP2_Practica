@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public abstract class Road extends SimulatedObject {
 	
 	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) { 
 		super(id);
+		
+		this.vehicles = new ArrayList<Vehicle>();
 		
 		if(srcJunc != null && destJunc != null && weather != null) {
 			this.source_junction = srcJunc;

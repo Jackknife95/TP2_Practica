@@ -95,7 +95,7 @@ public class RoadMap {
 	}
 	
 	
-	public Junction getJuction(String s) {
+	public Junction getJunction(String s) {
 		
 		if(mapaCruces.containsKey(s)) {
 			return mapaCruces.get(s);

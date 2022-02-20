@@ -1,5 +1,7 @@
 package simulator.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,11 @@ public class Junction extends SimulatedObject {
 	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) { 
 		
 		super(id);
+		
+		this.carreterasEntrantes = new ArrayList<Road>();
+		this.road_vehicleQueue = new HashMap<Road, List<Vehicle>>();
+		this.carreterasSalientes = new HashMap<Junction, Road>();
+		this.vehicle_queue = new ArrayList<List<Vehicle>>();
 		
 		if(lsStrategy != null && dqStrategy != null && xCoor >= 0 && yCoor >= 0) {
 
@@ -55,7 +62,7 @@ public class Junction extends SimulatedObject {
 	void addOutGoingRoad(Road r) {	
 		
 		Junction j = r.getDest();
-		
+
 		// Comprueba que ninguna carretera va al cruce destino de la carretera r y que es una carretera saliente del cruce actual
 		if(carreterasSalientes.get(j) == null && r.getSrc() == this) { 
 			carreterasSalientes.put(j,r);

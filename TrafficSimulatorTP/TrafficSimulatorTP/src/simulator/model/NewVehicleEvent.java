@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,30 +12,27 @@ public class NewVehicleEvent extends Event {
 	
 	NewVehicleEvent(int time, String id, int maxSpeed, int contClass, List<String> itinerary) {
 		super(time);
-		this.id= id;
-		this.maxSpeed=maxSpeed;
-		this.contClass=contClass;
-		this.itinerary=itinerary;
+		this.id = id;
+		this.maxSpeed = maxSpeed;
+		this.contClass = contClass;
+		this.itinerary = new ArrayList<String>(itinerary);
 	}
 
 	@Override
 	void execute(RoadMap map) {
-		if(map.getVehicle(id)==null) {
-			List<Junction> listJun= new LinkedList<Junction>();
-			for(int i=0;i<map.getJunctions().size();i++) {
-				Junction j=map.getJuction(itinerary.get(i));
-					if(j!= null) {
-						listJun.add(j);
-					}
-					else {
-						throw new IllegalArgumentException("Invalid Itinerary");
-					}
+				
+		List<Junction> listJun = new ArrayList<Junction>();
+		for(String s: itinerary) {
+			Junction j = map.getJunction(s);
+			if(j != null) {
+				listJun.add(j);
 			}
-			Vehicle v = new Vehicle(id, maxSpeed, contClass,listJun);
-			map.addVehicle(v);
-			v.moveToNextRoad();
-			
 		}
+		
+		Vehicle v = new Vehicle(id, maxSpeed, contClass, listJun);
+		map.addVehicle(v);
+		v.moveToNextRoad();	
+					
 	}
 
 }

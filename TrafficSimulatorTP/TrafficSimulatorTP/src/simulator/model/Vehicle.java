@@ -32,21 +32,23 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		super(id);
 		
 		this.itineraryPos = 0;
-		
+		this.currentSpeed = 0;
+		this.totalContamination = 0;
+		this.totalTravelledDistance = 0;
 		this.status = VehicleStatus.PENDING;
 		
 		if(maxSpeed < 0 ) {
 			throw new IllegalArgumentException("the maximum speed must be a postive Integer");		
 		}
 		else { 
-			this.maximumSpeed=maxSpeed;
+			this.maximumSpeed = maxSpeed;
 		}
 					
 		if( contClass < 0 || contClass > 10 ) {
 			throw new IllegalArgumentException("the contamination class must be a value between 0 and 10 inclusive");		
 		}
 		else {
-			this.contaminationClass= contClass;
+			this.contaminationClass = contClass;
 		}
 		
 		if(itinerary.size() < 2) {
@@ -67,7 +69,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		}
 		else {
 			
-			currentSpeed=(Math.min(s, maximumSpeed));
+			currentSpeed = (Math.min(s, maximumSpeed));
 		}	
 	}
 	
@@ -88,9 +90,18 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		this.status = status;
 	}
 
+	private void setRoad(Road road) {
+		this.road = road;
+	}
+
 	private void setLocation(int location) {
 		this.location = location;
-	}	
+	}
+
+	private void setTotalTravelledDistance(int totalTravelledDistance) {
+		this.totalTravelledDistance = totalTravelledDistance;
+	}
+	
 	
 	/*---------------------------------Public Getter Methods-------------------------------------*/
 	
@@ -160,31 +171,29 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 	}
 	
 	void moveToNextRoad() {
-		
-		Road road;
-		
+			
 		switch(status) {
-			case PENDING:			
-				road = itinerary.get(0).roadTo(itinerary.get(1));
-				road.enter(this);	
+			case PENDING:		
+				this.road = itinerary.get(0).roadTo(itinerary.get(1));
 				this.location = 0;
-				this.road = road;
-				this.status=VehicleStatus.TRAVELING;
+				this.status = VehicleStatus.TRAVELING;
+				this.road.enter(this);	
 			break;
 			
-			case WAITING:
-				this.road.exit(this);			
+			case WAITING:	
+				
 				if(itinerary.size() - 1 == itineraryPos) {
+					this.road.exit(this);
 					this.road = null;
 					this.location = 0;
 					status = VehicleStatus.ARRIVED;
 				}
 				else {
-					road = itinerary.get(itineraryPos).roadTo(itinerary.get(itineraryPos + 1));
-					this.road = road;
-					road.enter(this);
+					this.road.exit(this);	
+					this.road = itinerary.get(itineraryPos).roadTo(itinerary.get(itineraryPos + 1));					
 					this.status = VehicleStatus.TRAVELING;
-					location=0;
+					location = 0;
+					road.enter(this);					
 				}				
 			break;
 			
