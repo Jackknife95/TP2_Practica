@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -70,9 +71,9 @@ public class RoadMap {
 			
 			int i = 0;
 			boolean validItinerary = true;
-			List<Junction> itinerary = new LinkedList<Junction>(v.getItinerary());
+			List<Junction> itinerary = new ArrayList<Junction>(v.getItinerary());
 			
-			while (i < itinerary.size() - 1 && validItinerary) {
+			while ((i < (itinerary.size() - 1)) && validItinerary) {
 				
 				if(itinerary.get(i).roadTo(itinerary.get(i+1)) == null) {
 					validItinerary = false;

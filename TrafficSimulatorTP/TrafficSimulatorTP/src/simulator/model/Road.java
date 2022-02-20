@@ -24,6 +24,7 @@ public abstract class Road extends SimulatedObject {
 		super(id);
 		
 		this.vehicles = new ArrayList<Vehicle>();
+		this.total_contamination = 0;
 		
 		if(srcJunc != null && destJunc != null && weather != null) {
 			this.source_junction = srcJunc;
@@ -35,7 +36,7 @@ public abstract class Road extends SimulatedObject {
 		}
 		
 		
-		if(maxSpeed >= 0) {
+		if(maxSpeed > 0) {
 			this.maximum_speed = maxSpeed;
 			this.current_speed_limit = maxSpeed;
 			
@@ -44,19 +45,19 @@ public abstract class Road extends SimulatedObject {
 			throw new IllegalArgumentException("The maximum speed must be a positive Integer");
 		}
 		
-		if(length >= 0) {
+		if(length > 0) {
 			this.length = length;
 			
 		}
 		else {
-			throw new IllegalArgumentException("The maximum speed must be a positive Integer");
+			throw new IllegalArgumentException("The road length must be a positive Integer");
 		}
 		
-		if(contLimit >= 0) {
+		if(contLimit > 0) {
 			this.contamination_alarm_limit = contLimit;
 		}
 		else {
-			throw new IllegalArgumentException("The maximum speed must be a positive Integer");
+			throw new IllegalArgumentException("The road contamination limit must be a positive Integer");
 		}
 	
 	}
@@ -129,13 +130,13 @@ public abstract class Road extends SimulatedObject {
 	}
 	
 	void reduceContamination(int c) {			//resta la contaminacion haciendo que nunca sea menor a 0
-		this.total_contamination= Math.min(0,this.total_contamination-c);
+		this.total_contamination = Math.min(0,this.total_contamination - c);
 	}
 	
 		
 	void addContamination(int c) {
 			
-			if(c >= 0) {
+			if(c > 0) {
 				this.total_contamination = total_contamination + c;
 			}
 			else{
@@ -149,10 +150,9 @@ public abstract class Road extends SimulatedObject {
 	
 	void enter(Vehicle v)  {
 		
-		if(v.getSpeed() == 0 && v.getLocation() == 0) {
-			this.vehicles.add(v);
-		}
-		else {
+		this.vehicles.add(v);
+		
+		if(!(v.getSpeed() == 0 && v.getLocation() == 0)) {
 			throw new IllegalArgumentException("Vehicle's speed and location must be 0");
 		}
 		
@@ -179,14 +179,19 @@ public abstract class Road extends SimulatedObject {
 	public JSONObject report() {
 		
 		JSONObject json = new JSONObject();
-		JSONArray json_array = new JSONArray(vehicles);
+		JSONArray json_array = new JSONArray();
+				
+		for(Vehicle v : vehicles) {
+			json_array.put(v);
+		}
 		
 		json.put("id", getId());
-		json.put("speedLimit", current_speed_limit);
+		json.put("speedlimit", current_speed_limit);
 		json.put("weather", weather_conditions);
 		json.put("co2", total_contamination);
 		json.put("vehicles", json_array);
 		
+		//System.out.println(json);
 		return json;
 	}
 	

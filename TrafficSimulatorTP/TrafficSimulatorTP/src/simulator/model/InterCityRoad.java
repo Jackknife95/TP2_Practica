@@ -41,7 +41,11 @@ public class InterCityRoad extends Road{
 
 	@Override
 	void reduceTotalContamination() {
-		int contamination = (int)(((100 - calculateWeather(getWeather()))/100.0)* getTotalCO2());
+		
+		int x = calculateWeather(getWeather());
+		int tc = getTotalCO2();
+		
+		int contamination = (int)(((100 - x)/100.0)* tc);
 		reduceContamination(contamination);
 	}
 
@@ -52,15 +56,14 @@ public class InterCityRoad extends Road{
 		}
 		else {
 			setSpeedLimit(getMaxSpeed());
-		}
-		
+		}	
 	}
 
 	@Override
 	int calculateVehicleSpeed(Vehicle v) {
 		
 		// Se calcula la velocidad más alta posible teniendo en cuenta el limite de velocidad de la carretera
-		int vel = Math.min(v.getSpeed(), getMaxSpeed());				
+		int vel = getMaxSpeed();				
 		if(weather_conditions.equals(Weather.STORM)) {
 			vel = (int)(vel*0.8);
 		}

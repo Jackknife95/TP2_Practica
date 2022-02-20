@@ -60,6 +60,8 @@ class InterCityRoadTest {
 		// a vehicle
 		Vehicle v1 = new Vehicle("v1", 50, 1, Arrays.asList(j1, j2));
 		Vehicle v2 = new Vehicle("v2", 100, 3, Arrays.asList(j1, j2));
+		
+		j1.addOutGoingRoad(r1);
 
 		// enter the road
 		v1.moveToNextRoad();
@@ -117,6 +119,7 @@ class InterCityRoadTest {
 		// a vehicle
 		Vehicle v1 = new Vehicle("v1", 50, 1, Arrays.asList(j1, j2));
 
+		// Esto esta mal
 		assertThrows(UnsupportedOperationException.class, () -> r1.getVehicles().add(v1));
 
 	}
@@ -134,6 +137,8 @@ class InterCityRoadTest {
 		// a vehicle
 		Vehicle v1 = new Vehicle("v1", 50, 1, Arrays.asList(j1, j2));
 		Vehicle v2 = new Vehicle("v2", 100, 3, Arrays.asList(j1, j2));
+		
+		j1.addOutGoingRoad(r1);
 
 		// enter the road
 		v1.moveToNextRoad();

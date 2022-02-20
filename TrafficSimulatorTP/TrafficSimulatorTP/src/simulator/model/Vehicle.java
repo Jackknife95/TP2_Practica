@@ -37,7 +37,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		this.totalTravelledDistance = 0;
 		this.status = VehicleStatus.PENDING;
 		
-		if(maxSpeed < 0 ) {
+		if(maxSpeed <= 0 ) {
 			throw new IllegalArgumentException("the maximum speed must be a postive Integer");		
 		}
 		else { 
@@ -67,7 +67,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		if(s < 0) {
 			throw new IllegalArgumentException("the speed must be a positive Integer");		
 		}
-		else {
+		else if(status == VehicleStatus.TRAVELING) {
 			
 			currentSpeed = (Math.min(s, maximumSpeed));
 		}	
@@ -153,19 +153,18 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 			
 			setLocation(Math.min(location + currentSpeed, road.getLength()));
 			
-			if(location == road.getLength()) {
-				
-				itinerary.get(itineraryPos).enter(this);
+			int contaminationStep = (location - prevLocation) * contaminationClass;
+			
+			this.totalContamination += contaminationStep;
+			
+			this.road.addContamination(contaminationStep);
+			
+			if(location == road.getLength()) {	
 				itineraryPos++;
+				itinerary.get(itineraryPos).enter(this);
 				setStatus(VehicleStatus.WAITING);
 				setSpeed(0);
 			}
-			
-			int contaminationStep = (location - prevLocation) * contaminationClass;
-			
-			this.totalContamination = totalContamination + contaminationStep;
-			
-			this.road.addContamination(contaminationStep);
 					
 		}
 	}
@@ -192,7 +191,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 					this.road.exit(this);	
 					this.road = itinerary.get(itineraryPos).roadTo(itinerary.get(itineraryPos + 1));					
 					this.status = VehicleStatus.TRAVELING;
-					location = 0;
+					this.location = 0;
 					road.enter(this);					
 				}				
 			break;
