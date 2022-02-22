@@ -7,16 +7,12 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 	}
 
 	@Override
-	void execute(RoadMap map) {
-		
-		Junction dJ = map.getJunction(destJunc);
-		
-		Junction sJ = map.getJunction(srcJun);
-				
-		if(dJ!= null && sJ != null) {
-			CityRoad road = new CityRoad(id,sJ,dJ,length,co2Limit,maxSpeed,weather);
-			map.addRoad(road);
+	protected Road createRoad() {
+		InterCityRoad r=null;
+		if(destJ!= null && srcJ != null) {
+			r= new InterCityRoad(id,srcJ,destJ,length,co2Limit,maxSpeed,weather);
 		}
+		
+		return r;
 	}
-	
 }

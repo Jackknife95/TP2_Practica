@@ -9,7 +9,7 @@ public abstract class NewRoadEvent extends Event {
 	protected int co2Limit; 
 	protected int maxSpeed; 
 	protected Weather weather;
-	
+	protected Junction srcJ , destJ;
 	NewRoadEvent(int time, String id, String srcJun, String destJunc, int length, int co2Limit, int maxSpeed, Weather weather) {
 		super(time);
 		this.id=id;
@@ -21,6 +21,20 @@ public abstract class NewRoadEvent extends Event {
 		this.weather= weather;
 	}
 	@Override
-	abstract void execute(RoadMap map);
+	void execute(RoadMap map) {
+		destJ = map.getJunction(destJunc);
+		
+		srcJ = map.getJunction(srcJun);
+		
+		Road r =createRoad();
+		
+		if(r!=null) {
+			map.addRoad(r);
+		}
+		else {
+			throw new IllegalArgumentException("Invalid Road");
+		}
+	}
 	
+	abstract protected Road createRoad();
 }
