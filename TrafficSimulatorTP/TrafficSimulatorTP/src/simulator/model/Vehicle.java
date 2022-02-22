@@ -149,9 +149,11 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		
 		int prevLocation = location;
 
-		if(status.equals(VehicleStatus.TRAVELING)) {
+		if(status == VehicleStatus.TRAVELING) {
 			
 			setLocation(Math.min(location + currentSpeed, road.getLength()));
+			
+			this.totalTravelledDistance += (location - prevLocation);
 			
 			int contaminationStep = (location - prevLocation) * contaminationClass;
 			
@@ -211,9 +213,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		json.put("distance",totalTravelledDistance);
 		json.put("co2", totalContamination); 
 		json.put("class",contaminationClass );
-		json.put("status", status);
+		json.put("status", status.toString());
 				
-		if(!status.equals(VehicleStatus.PENDING) || !status.equals(VehicleStatus.ARRIVED)) {
+		if(status != VehicleStatus.PENDING && status != VehicleStatus.ARRIVED) {
 			json.put("road", road.getId());
 			json.put("location", location);
 		}

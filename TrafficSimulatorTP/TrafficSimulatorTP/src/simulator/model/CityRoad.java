@@ -11,7 +11,7 @@ public class CityRoad extends Road{
 
 		Weather we = getWeather();
 		
-		if(we.equals(Weather.WINDY)||we.equals(Weather.STORM)) {
+		if(we == Weather.WINDY||we == Weather.STORM) {
 			reduceContamination(10);
 		}
 		else {

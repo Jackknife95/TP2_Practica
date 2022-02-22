@@ -45,6 +45,9 @@ public class RoadMap {
 		if(!mapaCruces.containsKey(key)){
 			mapaCruces.put(key, j);
 		}
+		else {
+			throw new IllegalArgumentException("Excepción addJunction: cruce ya existente en el mapa de carreteras");
+		}
 	}
 	
 	void addRoad(Road r) {
@@ -126,17 +129,17 @@ public class RoadMap {
 	
 	public List<Vehicle> getVehicles(){
 		
-		return Collections.unmodifiableList(new LinkedList<Vehicle>(listaVehiculos));
+		return Collections.unmodifiableList(new ArrayList<Vehicle>(listaVehiculos));
 	}
 	
 	public List<Road> getRoads(){
 
-		return Collections.unmodifiableList(new LinkedList<Road>(listaCarreteras));
+		return Collections.unmodifiableList(new ArrayList<Road>(listaCarreteras));
 	}
 	
 	public List<Junction> getJunctions(){
 
-		return Collections.unmodifiableList(new LinkedList<Junction>(listaCruces));
+		return Collections.unmodifiableList(new ArrayList<Junction>(listaCruces));
 	}
 	
 	

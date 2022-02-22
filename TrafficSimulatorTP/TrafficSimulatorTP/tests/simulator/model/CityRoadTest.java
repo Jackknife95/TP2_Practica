@@ -61,9 +61,6 @@ class CityRoadTest {
 		Vehicle v1 = new Vehicle("v1", 50, 1, Arrays.asList(j1, j2));
 		Vehicle v2 = new Vehicle("v2", 100, 3, Arrays.asList(j1, j2));
 
-		// Esto lo he puesto yo
-		j1.addOutGoingRoad(r1);
-		
 		// enter the road
 		v1.moveToNextRoad();
 		v2.moveToNextRoad();
@@ -114,9 +111,6 @@ class CityRoadTest {
 		// a vehicle
 		Vehicle v1 = new Vehicle("v1", 50, 1, Arrays.asList(j1, j2));
 		Vehicle v2 = new Vehicle("v2", 100, 3, Arrays.asList(j1, j2));
-		
-		// Esto lo he puesto yo
-		j1.addOutGoingRoad(r1);
 
 		// enter the road
 		v1.moveToNextRoad();
@@ -124,7 +118,7 @@ class CityRoadTest {
 
 		String s = "{\"speedlimit\":100,\"co2\":0,\"weather\":\"SUNNY\",\"vehicles\":[\"v1\",\"v2\"],\"id\":\"r1\"}";
 
-		//assertTrue(new JSONObject(s).similar(r1.report()));
+		assertTrue(new JSONObject(s).similar(r1.report()));
 
 		r1.advance(1);
 
@@ -146,7 +140,6 @@ class CityRoadTest {
 		// a vehicle
 		Vehicle v1 = new Vehicle("v1", 50, 1, Arrays.asList(j1, j2));
 
-		// Esto está mal
 		assertThrows(UnsupportedOperationException.class, () -> r1.getVehicles().add(v1));
 
 	}

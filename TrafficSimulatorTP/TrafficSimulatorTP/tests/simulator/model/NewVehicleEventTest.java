@@ -32,6 +32,7 @@ class NewVehicleEventTest {
 		Event e = new NewVehicleEvent(10,"v1", 50, 1, Arrays.asList("j1", "j2"));
 		e.execute(map);
 		
+		
 		// check that the vehicle was added to the map correctly
 		List<Vehicle> l = map.getVehicles();
 		

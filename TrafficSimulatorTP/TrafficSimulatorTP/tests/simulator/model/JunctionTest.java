@@ -21,16 +21,11 @@ class JunctionTest {
 		Road r3 = new InterCityRoad("r3", j3, j4, 100, 500, 1000, Weather.SUNNY);
 		Road r4 = new InterCityRoad("r4", j3, j5, 100, 500, 1000, Weather.SUNNY);
 		
-		//j1.addOutGoingRoad(r1);
-		//j2.addOutGoingRoad(r2);
-		//j3.addOutGoingRoad(r3);
-		//j3.addOutGoingRoad(r4);
-		
 		// check that junctions stores roads correctly
-		//assertEquals(r1, j1.roadTo(j3));
-		//assertEquals(r2, j2.roadTo(j3));
-		//assertEquals(r3, j3.roadTo(j4));
-		//assertEquals(r4, j3.roadTo(j5));
+		assertEquals(r1, j1.roadTo(j3));
+		assertEquals(r2, j2.roadTo(j3));
+		assertEquals(r3, j3.roadTo(j4));
+		assertEquals(r4, j3.roadTo(j5));
 		
 		assertNull(j1.roadTo(j4));
 		assertNull(j2.roadTo(j4));

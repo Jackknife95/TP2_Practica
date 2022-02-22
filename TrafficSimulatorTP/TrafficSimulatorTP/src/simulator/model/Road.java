@@ -1,6 +1,7 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public abstract class Road extends SimulatedObject {
 			this.source_junction = srcJunc;
 			this.destination_junction = destJunc;
 			this.weather_conditions = weather;
+			this.source_junction.addOutGoingRoad(this);
+			this.destination_junction.addIncommingRoad(this);
 		}
 		else {
 			throw new IllegalArgumentException("The arguments must be no null objects");
@@ -60,6 +63,7 @@ public abstract class Road extends SimulatedObject {
 			throw new IllegalArgumentException("The road contamination limit must be a positive Integer");
 		}
 	
+		
 	}
 	
 	
@@ -114,7 +118,7 @@ public abstract class Road extends SimulatedObject {
 	}
 	
 	public List<Vehicle> getVehicles(){
-		return this.vehicles;
+		return Collections.unmodifiableList(vehicles);
 	}
 
 	/*---------------------------------Setter Methods-------------------------------------*/
@@ -130,14 +134,14 @@ public abstract class Road extends SimulatedObject {
 	}
 	
 	void reduceContamination(int c) {			//resta la contaminacion haciendo que nunca sea menor a 0
-		this.total_contamination = Math.min(0,this.total_contamination - c);
+		this.total_contamination = Math.max(0, total_contamination - c);
 	}
 	
 		
 	void addContamination(int c) {
 			
 			if(c > 0) {
-				this.total_contamination = total_contamination + c;
+				this.total_contamination += c;
 			}
 			else{
 				throw new IllegalArgumentException("Contamination must be a positive Integer");
@@ -145,7 +149,7 @@ public abstract class Road extends SimulatedObject {
 		}
 	
 	protected void setSpeedLimit(int s) {
-		this.current_speed_limit= s;
+		this.current_speed_limit = s;
 	}
 	
 	void enter(Vehicle v)  {
@@ -164,6 +168,7 @@ public abstract class Road extends SimulatedObject {
 	
 	@Override
 	void advance(int time) {
+		
 		reduceTotalContamination();
 		updateSpeedLimit();
 		
@@ -187,11 +192,10 @@ public abstract class Road extends SimulatedObject {
 		
 		json.put("id", getId());
 		json.put("speedlimit", current_speed_limit);
-		json.put("weather", weather_conditions);
+		json.put("weather", weather_conditions.toString());
 		json.put("co2", total_contamination);
 		json.put("vehicles", json_array);
 		
-		//System.out.println(json);
 		return json;
 	}
 	

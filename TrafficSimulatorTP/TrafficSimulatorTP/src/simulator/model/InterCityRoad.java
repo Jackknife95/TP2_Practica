@@ -7,44 +7,30 @@ public class InterCityRoad extends Road{
 	}
 	
 	private int calculateWeather(Weather weather) {
-		
-		int ret;
-		
-		switch(weather) {
-		case SUNNY:
-			ret = 2;
-			break;
-		
-		case CLOUDY:
-			ret = 3;
-			break;
-		
-		case RAINY:
-			ret = 10;
-			break;
-		
-		case WINDY:
-			ret = 15;
-			break;
 			
-		case STORM:
-			ret = 20;
-			break;
-			
-		default: 
-			ret = 1;
-			break;
+		if(weather == Weather.SUNNY) {
+			return 2;
 		}
-		
-		return ret;
+		else if(weather == Weather.CLOUDY) {
+			return 3;
+		}
+		else if( weather == Weather.RAINY) {
+			return 10;
+			
+		}
+		else if (weather == Weather.WINDY) {
+			return 15;
+		}
+		else {
+			return 20;
+		}
 	}
 
 	@Override
 	void reduceTotalContamination() {
 		
 		int x = calculateWeather(getWeather());
-		int tc = getTotalCO2();
-		
+		int tc = getTotalCO2();	
 		int contamination = (int)(((100 - x)/100.0)* tc);
 		reduceContamination(contamination);
 	}
@@ -63,8 +49,8 @@ public class InterCityRoad extends Road{
 	int calculateVehicleSpeed(Vehicle v) {
 		
 		// Se calcula la velocidad más alta posible teniendo en cuenta el limite de velocidad de la carretera
-		int vel = getMaxSpeed();				
-		if(weather_conditions.equals(Weather.STORM)) {
+		int vel = getSpeedLimit();				
+		if(weather_conditions == Weather.STORM) {
 			vel = (int)(vel*0.8);
 		}
 		

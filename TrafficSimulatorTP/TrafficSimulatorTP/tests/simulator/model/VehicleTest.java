@@ -81,6 +81,7 @@ class VehicleTest {
 		JSONObject report = v1.report();
 		assertTrue(jo.similar(report));
 		
+		
 		assertEquals("v1", v1.getId());
 	}
 	
