@@ -1,6 +1,8 @@
 package simulator.launcher;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -9,8 +11,16 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import simulator.factories.Builder;
+import simulator.factories.BuilderBasedFactory;
 import simulator.factories.Factory;
+import simulator.factories.MostCrowdedStrategyBuilder;
+import simulator.factories.MoveAllStrategyBuilder;
+import simulator.factories.MoveFirstStrategyBuilder;
+import simulator.factories.RoundRobinStrategyBuilder;
+import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
+import simulator.model.LightSwitchingStrategy;
 
 public class Main {
 
@@ -85,6 +95,17 @@ public class Main {
 	private static void initFactories() {
 
 		// TODO complete this method to initialize _eventsFactory
+		ArrayList<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
+		lsbs.add( new RoundRobinStrategyBuilder() );
+		lsbs.add( new MostCrowdedStrategyBuilder() );
+		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory
+		<>(lsbs);
+		
+		ArrayList<Builder<DequeuingStrategy>> dqbs = new ArrayList<>();
+		dqbs.add( new MoveFirstStrategyBuilder() );
+		dqbs.add( new MoveAllStrategyBuilder() );
+		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(
+		dqbs);
 
 	}
 

@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import simulator.model.DequeuingStrategy;
-import simulator.model.LightSwitchingStrategy;
 
 public class BuilderBasedFactory<T> implements Factory<T> {
 
@@ -14,18 +12,6 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 
 	public BuilderBasedFactory(List<Builder<T>> builders) {
 		_builders = new ArrayList<>(builders);
-		
-		ArrayList<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
-		lsbs.add( new RoundRobinStrategyBuilder() );
-		lsbs.add( new MostCrowdedStrategyBuilder() );
-		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory
-		<>(lsbs);
-		
-		ArrayList<Builder<DequeuingStrategy>> dqbs = new ArrayList<>();
-		dqbs.add( new MoveFirstStrategyBuilder() );
-		dqbs.add( new MoveAllStrategyBuilder() );
-		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(
-		dqbs);
 	}
 
 	@Override
