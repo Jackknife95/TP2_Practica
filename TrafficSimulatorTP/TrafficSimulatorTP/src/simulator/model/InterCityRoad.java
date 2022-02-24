@@ -32,7 +32,7 @@ public class InterCityRoad extends Road{
 		int x = calculateWeather(getWeather());
 		int tc = getTotalCO2();	
 		int contamination = (int)(((100 - x)/100.0)* tc);
-		reduceContamination(contamination);
+		setContamination(contamination);
 	}
 
 	@Override

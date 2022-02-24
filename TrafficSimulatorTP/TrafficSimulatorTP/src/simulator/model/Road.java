@@ -133,8 +133,12 @@ public abstract class Road extends SimulatedObject {
 		
 	}
 	
-	void reduceContamination(int c) {			//resta la contaminacion haciendo que nunca sea menor a 0
+	void reduceContamination(int c) { //resta la contaminacion haciendo que nunca sea menor a 0
 		this.total_contamination = Math.max(0, total_contamination - c);
+	}
+	
+	void setContamination(int c) {
+		this.total_contamination = c;
 	}
 	
 		
@@ -187,8 +191,9 @@ public abstract class Road extends SimulatedObject {
 		JSONArray json_array = new JSONArray();
 				
 		for(Vehicle v : vehicles) {
-			json_array.put(v);
+			json_array.put(v.getId());
 		}
+		
 		
 		json.put("id", getId());
 		json.put("speedlimit", current_speed_limit);

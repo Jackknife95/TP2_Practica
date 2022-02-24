@@ -6,13 +6,10 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 			super(time,id,srcJun,destJunc, length, co2Limit, maxSpeed, weather);
 	}
 
+	
 	@Override
-	protected Road createRoad() {
-		InterCityRoad r=null;
-		if(destJ!= null && srcJ != null) {
-			r= new InterCityRoad(id,srcJ,destJ,length,co2Limit,maxSpeed,weather);
-		}
+	protected Road createRoad(Junction srcJ, Junction destJ) {
 		
-		return r;
-	}
+		return new InterCityRoad(id, srcJ, destJ, maxSpeed, co2Limit, length, weather);
+	} 
 }

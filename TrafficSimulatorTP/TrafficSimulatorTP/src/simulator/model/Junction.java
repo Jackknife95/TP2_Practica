@@ -12,9 +12,9 @@ import org.json.JSONObject;
 public class Junction extends SimulatedObject {
 
 	private List<Road> carreterasEntrantes; //Lista de carreteras que entran al cruce
-	private Map<Road, List<Vehicle>> road_vehicleQueue; // Se utiliza para realizar búsquedas rápidas
+	private Map<Road, List<Vehicle>> mapa_carretera_cola; // Se utiliza para realizar búsquedas rápidas
 	private Map<Junction, Road> carreterasSalientes; // Carretera tomada para llegar a un junction desde la actual
-	private List<List<Vehicle>> vehicle_queue;  // Lista de cola para carreteras entrantes
+	private List<List<Vehicle>> lista_cola;  // Lista de cola para carreteras entrantes
 	private int currGreen; // índice de carretera entrante con semáforo en verde (-1 todos en rojo)
 	private int lastSwitchingTime = 0; // Ultimo paso que paso de verde a rojo
 	private int x, y;
@@ -27,9 +27,9 @@ public class Junction extends SimulatedObject {
 		super(id);
 		
 		this.carreterasEntrantes = new ArrayList<Road>();
-		this.road_vehicleQueue = new HashMap<Road, List<Vehicle>>();
+		this.mapa_carretera_cola = new HashMap<Road, List<Vehicle>>();
 		this.carreterasSalientes = new HashMap<Junction, Road>();
-		this.vehicle_queue = new ArrayList<List<Vehicle>>();
+		this.lista_cola = new ArrayList<List<Vehicle>>();
 		
 		if(lsStrategy != null && dqStrategy != null && xCoor >= 0 && yCoor >= 0) {
 
@@ -50,8 +50,8 @@ public class Junction extends SimulatedObject {
 			
 			carreterasEntrantes.add(r); // Insertar al final la lista de carreteras entrantes
 			List<Vehicle> list = new LinkedList<Vehicle>(); // Creamos una nueva instancia de una Lista enlazada
-			vehicle_queue.add(list); // Insertar la linkedList al final de la cola de vehiculos
-			road_vehicleQueue.put(r, list); // Insertamos en el mapa de carretera - lista vehiculos para posteriormente realizar una busqueda eficiente
+			lista_cola.add(list); // Insertar la linkedList al final de la cola de vehiculos
+			mapa_carretera_cola.put(r, list); // Insertamos en el mapa de carretera - lista vehiculos para posteriormente realizar una busqueda eficiente
 		}
 		else {
 			throw new IllegalArgumentException("addIncommingRoad recibe una carretera que no es entrante");
@@ -77,10 +77,10 @@ public class Junction extends SimulatedObject {
 		
 		// Insertamos en la cola correspondiente
 		int index = carreterasEntrantes.indexOf(currentRoad);
-		vehicle_queue.get(index).add(v);
+		lista_cola.get(index).add(v);
 		
 		// Insertamos en el mapa la misma información
-		road_vehicleQueue.get(currentRoad).add(v);
+		mapa_carretera_cola.get(currentRoad).add(v);
 	}
 	
 	
@@ -94,10 +94,10 @@ public class Junction extends SimulatedObject {
 		
 		Road key = null;
 		
-		for(List<Vehicle> q : vehicle_queue) {
+		for(List<Vehicle> q : lista_cola) {
 
 			for(Road r : carreterasEntrantes) {
-				if(road_vehicleQueue.get(r).equals(q)) {
+				if(mapa_carretera_cola.get(r).equals(q)) {
 					key = r;
 				}
 			}
@@ -109,13 +109,13 @@ public class Junction extends SimulatedObject {
 				q.remove(v); 
 				
 				if(key != null) {
-					road_vehicleQueue.get(key).remove(v);
+					mapa_carretera_cola.get(key).remove(v);
 				}			
 			}
 		}
 		
 		
-		int index = lsStrategy.chooseNextGreen(carreterasEntrantes, vehicle_queue, currGreen, lastSwitchingTime, time);
+		int index = lsStrategy.chooseNextGreen(carreterasEntrantes, lista_cola, currGreen, lastSwitchingTime, time);
 		
 		
 		if(index != currGreen) {
@@ -136,13 +136,13 @@ public class Junction extends SimulatedObject {
 		json.put("id", getId());
 		json.put("green", aux);
 		
-		for(int i = 0; i < vehicle_queue.size(); i++) {
+		for(int i = 0; i < lista_cola.size(); i++) {
 					
 			String id = carreterasEntrantes.get(i).getId();
 				
 			JSONArray vehicles = new JSONArray(); // Lista de vehiculos de la cola ordenada
-			for(int j = 0; j < vehicle_queue.get(i).size(); j++) {
-				vehicles.put(vehicle_queue.get(i).get(j));
+			for(int j = 0; j < lista_cola.get(i).size(); j++) {
+				vehicles.put(lista_cola.get(i).get(j));
 			}
 			
 			JSONObject json2 = new JSONObject();

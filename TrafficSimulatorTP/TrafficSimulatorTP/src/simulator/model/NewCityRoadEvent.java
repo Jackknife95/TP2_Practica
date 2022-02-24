@@ -6,11 +6,9 @@ public class NewCityRoadEvent extends NewRoadEvent{
 			super(time, id, srcJun, destJunc, length, co2Limit, maxSpeed, weather);
 	}
 
-	protected Road createRoad() {
-		CityRoad r=null;
-		if(destJ!= null && srcJ != null) {
-			r= new CityRoad(id,srcJ,destJ,length,co2Limit,maxSpeed,weather);
-		}
-		return r;
+	@Override
+	protected Road createRoad(Junction srcJ, Junction destJ) {
+
+		return new CityRoad(id, srcJ, destJ, maxSpeed, co2Limit, length, weather);
 	}
 }

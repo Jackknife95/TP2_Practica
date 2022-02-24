@@ -3,7 +3,6 @@ package simulator.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +19,9 @@ public class RoadMap {
 	private Map<String,Vehicle> mapaVehiculos;
 	
 	public RoadMap(){
-		this.listaCruces = new LinkedList<Junction>();
-		this.listaCarreteras = new LinkedList<Road>();
-		this.listaVehiculos = new LinkedList<Vehicle>();
+		this.listaCruces = new ArrayList<Junction>();
+		this.listaCarreteras = new ArrayList<Road>();
+		this.listaVehiculos = new ArrayList<Vehicle>();
 		this.mapaCruces = new HashMap<String, Junction>();
 		this.mapaCarreteras = new HashMap<String, Road>();
 		this.mapaVehiculos = new HashMap<String, Vehicle>();
