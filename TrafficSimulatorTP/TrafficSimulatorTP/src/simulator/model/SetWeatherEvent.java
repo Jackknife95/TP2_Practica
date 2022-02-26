@@ -9,7 +9,7 @@ public class SetWeatherEvent extends Event{
 
 	List<Pair<String,Weather>> w;
 	
-	SetWeatherEvent(int time, List<Pair<String,Weather>> ws) {
+	public SetWeatherEvent(int time, List<Pair<String,Weather>> ws) {
 		
 		super(time);
 		

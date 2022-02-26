@@ -5,7 +5,7 @@ import simulator.model.NewCityRoadEvent;
 
 public class NewCityRoadEventBuilder extends NewRoadEventBuilder{
 
-	NewCityRoadEventBuilder() {
+	public NewCityRoadEventBuilder() {
 		super("new_city_road");
 	}
 

@@ -17,7 +17,13 @@ import simulator.factories.Factory;
 import simulator.factories.MostCrowdedStrategyBuilder;
 import simulator.factories.MoveAllStrategyBuilder;
 import simulator.factories.MoveFirstStrategyBuilder;
+import simulator.factories.NewCityRoadEventBuilder;
+import simulator.factories.NewInterCityRoadEventBuilder;
+import simulator.factories.NewJunctionEventBuilder;
+import simulator.factories.NewVehicleEventBuilder;
 import simulator.factories.RoundRobinStrategyBuilder;
+import simulator.factories.SetContClassEventBuilder;
+import simulator.factories.SetWeatherEventBuilder;
 import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
@@ -106,6 +112,15 @@ public class Main {
 		dqbs.add( new MoveAllStrategyBuilder() );
 		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(
 		dqbs);
+		
+		ArrayList<Builder<Event>> ebs = new ArrayList<>();
+		ebs.add( new NewJunctionEventBuilder(lssFactory,dqsFactory) );
+		ebs.add( new NewCityRoadEventBuilder() );
+		ebs.add( new NewInterCityRoadEventBuilder() );
+		ebs.add( new NewVehicleEventBuilder() );
+		ebs.add( new SetWeatherEventBuilder() );
+		ebs.add( new SetContClassEventBuilder() );
+		Factory<Event> eventsFactory = new BuilderBasedFactory<>(ebs);
 
 	}
 

@@ -10,7 +10,7 @@ public class NewVehicleEvent extends Event {
 	private int maxSpeed, contClass;
 	private List<String> itinerary;
 	
-	NewVehicleEvent(int time, String id, int maxSpeed, int contClass, List<String> itinerary) {
+	public NewVehicleEvent(int time, String id, int maxSpeed, int contClass, List<String> itinerary) {
 		super(time);
 		this.id = id;
 		this.maxSpeed = maxSpeed;

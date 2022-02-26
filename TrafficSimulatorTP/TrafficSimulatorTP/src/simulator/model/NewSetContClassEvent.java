@@ -9,7 +9,7 @@ public class NewSetContClassEvent extends Event{
 
 	List<Pair<String,Integer>> c;
 	
-	NewSetContClassEvent(int time, List<Pair<String,Integer>> cs){
+	public NewSetContClassEvent(int time, List<Pair<String,Integer>> cs){
 		super(time);
 		
 		if(cs != null) {			
