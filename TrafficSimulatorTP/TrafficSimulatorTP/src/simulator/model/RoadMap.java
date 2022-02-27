@@ -55,7 +55,7 @@ public class RoadMap {
 				
 		String id = r.getId();
 		
-		if(!mapaCarreteras.containsKey(id) && mapaCruces.containsValue(r.getSrc()) && mapaCruces.containsValue(r.getDest())) {
+		if(!mapaCarreteras.containsKey(id) && (mapaCruces.containsValue(r.getSrc()) && mapaCruces.containsValue(r.getDest()))) {
 			mapaCarreteras.put(id, r);
 		}
 		else {
@@ -100,30 +100,18 @@ public class RoadMap {
 	
 	public Junction getJunction(String s) {
 		
-		if(mapaCruces.containsKey(s)) {
-			return mapaCruces.get(s);
-		}
-		
-		return null;
+		return mapaCruces.get(s);
 	}
 	
 	
 	public Road getRoad(String s) {
 		
-		if(mapaCarreteras.containsKey(s)) {
-			return mapaCarreteras.get(s);
-		}
-
-		return null;
+		return mapaCarreteras.get(s);
 	}
 	
 	public Vehicle getVehicle(String s) {
 		
-		if(mapaVehiculos.containsKey(s)) {
-			return mapaVehiculos.get(s);
-		}
-		
-		return null;
+		return mapaVehiculos.get(s);
 	}
 	
 	public List<Vehicle> getVehicles(){

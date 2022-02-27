@@ -13,7 +13,7 @@ public class MoveAllStrategyBuilder extends Builder<DequeuingStrategy> {
 
 	@Override
 	protected DequeuingStrategy createTheInstance(JSONObject data) {
-		MoveAllStrategy mas= new MoveAllStrategy();
+		MoveAllStrategy mas = new MoveAllStrategy();
 		return mas;
 	}
 

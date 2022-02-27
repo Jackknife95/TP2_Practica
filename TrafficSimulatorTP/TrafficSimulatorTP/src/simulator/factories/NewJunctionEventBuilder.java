@@ -15,8 +15,8 @@ public class NewJunctionEventBuilder extends Builder<Event> {
 	public NewJunctionEventBuilder(Factory<LightSwitchingStrategy> lssFactory, Factory<DequeuingStrategy> dqsFactory) {
 		
 		super("new_junction");
-		this.lssFactory= lssFactory;
-		this.dqsFactory= dqsFactory;
+		this.lssFactory = lssFactory;
+		this.dqsFactory = dqsFactory;
 		
 	}
 	
@@ -24,9 +24,9 @@ public class NewJunctionEventBuilder extends Builder<Event> {
 	@Override
 	protected Event createTheInstance(JSONObject data) {
 		
-		LightSwitchingStrategy l =lssFactory.createInstance(data.getJSONObject("ls_strategy"));
+		LightSwitchingStrategy l = lssFactory.createInstance(data.getJSONObject("ls_strategy"));
 		
-		DequeuingStrategy d =dqsFactory.createInstance(data.getJSONObject("dq_strategy"));
+		DequeuingStrategy d = dqsFactory.createInstance(data.getJSONObject("dq_strategy"));
 		
 		NewJunctionEvent e = new NewJunctionEvent(data.getInt("time"),data.getString("id"),l,d,data.getJSONArray("coor").getInt(0),data.getJSONArray("coor").getInt(1));
 		

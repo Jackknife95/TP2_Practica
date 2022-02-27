@@ -16,15 +16,14 @@ public class NewVehicleEventBuilder extends Builder<Event>{
 	
 	}
 
-
 	@Override
 	protected Event createTheInstance(JSONObject data) {
 		
-		JSONArray jo=data.getJSONArray("itinerar");
+		JSONArray jo = data.getJSONArray("itinerary");
 		
-		LinkedList<String> l= new LinkedList<String>();
+		LinkedList<String> l = new LinkedList<String>();
 		
-		for (int i =0; i<jo.length();i++) {
+		for (int i =0; i < jo.length();i++) {
 			l.add(jo.get(i).toString());
 		}
 		
