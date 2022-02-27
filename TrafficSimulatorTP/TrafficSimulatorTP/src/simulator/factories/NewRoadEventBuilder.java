@@ -15,7 +15,6 @@ public abstract class NewRoadEventBuilder extends Builder<Event> {
 
 	@Override
 	protected Event createTheInstance(JSONObject data) {
-		// TODO Auto-generated method stub
 		time = data.getInt("time");
 		id= data.getString("id");
 		src= data.getString("src");

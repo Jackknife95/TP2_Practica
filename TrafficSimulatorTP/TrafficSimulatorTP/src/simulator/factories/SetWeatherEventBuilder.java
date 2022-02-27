@@ -29,7 +29,7 @@ public class SetWeatherEventBuilder extends Builder<Event> {
 			Weather we= Weather.valueOf(jo.getString("weather"));
 			
 			Pair<String,Weather> p = new Pair<String,Weather>(jo.getString("road"),we);
-			//TODO REVISAR LA LINEA ANTERIOR
+			
 			
 			l.add(p);
 		}
