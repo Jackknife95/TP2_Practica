@@ -131,7 +131,14 @@ public class Junction extends SimulatedObject {
 		
 		JSONArray queues = new JSONArray();
 		
-		String aux = currGreen == -1 ? "none" : carreterasEntrantes.get(currGreen).getId();	
+		String aux;
+		
+		if(currGreen == -1 || carreterasEntrantes.isEmpty()) {
+			aux = "none";
+		}
+		else {
+			aux = carreterasEntrantes.get(currGreen).getId();
+		}
 		
 		json.put("id", getId());
 		json.put("green", aux);
@@ -142,7 +149,7 @@ public class Junction extends SimulatedObject {
 				
 			JSONArray vehicles = new JSONArray(); // Lista de vehiculos de la cola ordenada
 			for(int j = 0; j < lista_cola.get(i).size(); j++) {
-				vehicles.put(lista_cola.get(i).get(j));
+				vehicles.put(lista_cola.get(i).get(j).getId());
 			}
 			
 			JSONObject json2 = new JSONObject();
