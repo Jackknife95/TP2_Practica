@@ -27,11 +27,8 @@ public class TrafficSimulator {
 	public void advance() {
 		this.time++;
 			
-		for(Iterator<Event> it = listaEventos.iterator(); it.hasNext();) {
-			if(it.next().getTime() == time) {
-				it.next().execute(mapaCarreteras);
-				it.remove();
-			}
+		while(listaEventos.size() > 0 && listaEventos.get(0).getTime() == time) {
+			listaEventos.remove(0).execute(mapaCarreteras);
 		}
 		
 		for(Junction j : mapaCarreteras.getJunctions()) {

@@ -37,12 +37,12 @@ public class RoadMap {
 	}
 	
 	void addJunction(Junction j) {
-		
-		listaCruces.add(j);
+	
 		
 		String key = j.getId();		
 		if(!mapaCruces.containsKey(key)){
 			mapaCruces.put(key, j);
+			listaCruces.add(j);
 		}
 		else {
 			throw new IllegalArgumentException("Excepción addJunction: cruce ya existente en el mapa de carreteras");
@@ -51,12 +51,13 @@ public class RoadMap {
 	
 	void addRoad(Road r) {
 		
-		listaCarreteras.add(r);
+		
 				
 		String id = r.getId();
 		
 		if(!mapaCarreteras.containsKey(id) && (mapaCruces.containsValue(r.getSrc()) && mapaCruces.containsValue(r.getDest()))) {
 			mapaCarreteras.put(id, r);
+			listaCarreteras.add(r);
 		}
 		else {
 			throw new IllegalArgumentException("Excepción addRoad: carretera ya existente o cruces no contenidos en el mapa de cruces");
@@ -65,7 +66,7 @@ public class RoadMap {
 	
 	
 	void addVehicle(Vehicle v) {
-		listaVehiculos.add(v);
+	
 		
 		String id = v.getId();
 		
@@ -85,6 +86,7 @@ public class RoadMap {
 			
 			if(validItinerary) {
 				mapaVehiculos.put(id, v);
+				listaVehiculos.add(v);
 			}
 			else {
 				throw new IllegalArgumentException("Excepción addVehicle: el itinerario es inválido");
@@ -140,15 +142,15 @@ public class RoadMap {
 		jo.put("junctions",ja);
 		
 		
-		ja= new JSONArray();
+		ja = new JSONArray();
 		
 		for(Road r : listaCarreteras) {
 			ja.put(r.report());
 		}		
-		jo.put("road", ja);
+		jo.put("roads", ja);
 		
 		
-		ja= new JSONArray();
+		ja = new JSONArray();
 		
 		for(Vehicle v : listaVehiculos) {
 			ja.put(v.report());
