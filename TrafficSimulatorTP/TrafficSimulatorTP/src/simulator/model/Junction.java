@@ -30,6 +30,7 @@ public class Junction extends SimulatedObject {
 		this.mapa_carretera_cola = new HashMap<Road, List<Vehicle>>();
 		this.carreterasSalientes = new HashMap<Junction, Road>();
 		this.lista_cola = new ArrayList<List<Vehicle>>();
+		this.currGreen = -1;
 		
 		if(lsStrategy != null && dqStrategy != null && xCoor >= 0 && yCoor >= 0) {
 
@@ -92,32 +93,17 @@ public class Junction extends SimulatedObject {
 	@Override
 	void advance(int time) {
 		
-		Road key = null;
-		
-		for(List<Vehicle> q : lista_cola) {
-
-			for(Road r : carreterasEntrantes) {
-				if(mapa_carretera_cola.get(r).equals(q)) {
-					key = r;
-				}
-			}
-					
-			List<Vehicle> temp = dqStrategy.dequeue(q); // Cola de vehiculos a quitar 
-					
-			for(Vehicle v : temp) { // Quita los vehiculos tanto de la lista como del mapa
+		if(currGreen != -1) {
+			List <Vehicle> l = lista_cola.get(currGreen);
+			
+			for(Vehicle v : l) { // Quita los vehiculos de la cola
 				v.advance(time);
-				q.remove(v); 
-				
-				if(key != null) {
-					mapa_carretera_cola.get(key).remove(v);
-				}			
+				l.remove(v); 
 			}
 		}
-		
-		
+			
 		int index = lsStrategy.chooseNextGreen(carreterasEntrantes, lista_cola, currGreen, lastSwitchingTime, time);
-		
-		
+				
 		if(index != currGreen) {
 			this.currGreen = index;
 			this.lastSwitchingTime = time;
@@ -133,7 +119,7 @@ public class Junction extends SimulatedObject {
 		
 		String aux;
 		
-		if(currGreen == -1 || carreterasEntrantes.isEmpty()) {
+		if(currGreen == -1) {
 			aux = "none";
 		}
 		else {
