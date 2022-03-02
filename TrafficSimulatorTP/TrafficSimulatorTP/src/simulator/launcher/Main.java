@@ -1,8 +1,11 @@
 package simulator.launcher;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.commons.cli.CommandLine;
@@ -142,27 +145,29 @@ public class Main {
 	private static void startBatchMode() throws IOException {
 		// TODO Comprobar
 		
-		FileInputStream f = new FileInputStream(_inFile);
+		InputStream f = new FileInputStream(new File(_inFile));
 		
 		TrafficSimulator t = new TrafficSimulator();
 		
 		Controller c = new Controller(t, _eventsFactory);
 		
-		FileOutputStream o= new FileOutputStream(_outFile);
+		
 		
 		c.loadEvents(f);
 		
 		f.close();
 		
 		if(_outFile!= null) {
+			OutputStream o= new FileOutputStream(new File(_outFile));
 			c.run(ticks, o);
+			o.close();
 		}
 		
 		else {
 			c.run(ticks, System.out);
 		}
 		
-		o.close();
+		
 	}
 
 	private static void start(String[] args) throws IOException {
