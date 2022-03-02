@@ -1,5 +1,7 @@
 package simulator.launcher;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import simulator.control.Controller;
 import simulator.factories.Builder;
 import simulator.factories.BuilderBasedFactory;
 import simulator.factories.Factory;
@@ -27,6 +30,7 @@ import simulator.factories.SetWeatherEventBuilder;
 import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
+import simulator.model.TrafficSimulator;
 
 public class Main {
 
@@ -130,11 +134,35 @@ public class Main {
 		ebs.add( new SetWeatherEventBuilder() );
 		ebs.add( new SetContClassEventBuilder() );
 		Factory<Event> eventsFactory = new BuilderBasedFactory<>(ebs);
+		
+		_eventsFactory=eventsFactory;
 
 	}
 
 	private static void startBatchMode() throws IOException {
-		// TODO complete this method to start the simulation iniciar ts, controller... ect y al final impripir por pantalla o fichero
+		// TODO Comprobar
+		
+		FileInputStream f = new FileInputStream(_inFile);
+		
+		TrafficSimulator t = new TrafficSimulator();
+		
+		Controller c = new Controller(t, _eventsFactory);
+		
+		FileOutputStream o= new FileOutputStream(_outFile);
+		
+		c.loadEvents(f);
+		
+		f.close();
+		
+		if(_outFile!= null) {
+			c.run(ticks, o);
+		}
+		
+		else {
+			c.run(ticks, System.out);
+		}
+		
+		o.close();
 	}
 
 	private static void start(String[] args) throws IOException {

@@ -66,6 +66,7 @@ public class Controller {
 	
 		p.println("]}");
 		
+		p.close();
 	}
 	
 	public void reset() {
