@@ -34,7 +34,7 @@ public class Main {
 	private static String _inFile = null;
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
-
+    private static int ticks;
 	private static void parseArgs(String[] args) {
 
 		// define the valid command line options
@@ -49,6 +49,7 @@ public class Main {
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			parseOutFileOption(line);
+			parseTicksOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -96,7 +97,17 @@ public class Main {
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
 		_outFile = line.getOptionValue("o");
 	}
-
+	
+	private static void parseTicksOption(CommandLine line) throws ParseException {
+		String s =line.getOptionValue("t", _timeLimitDefaultValue.toString());
+		try {
+			ticks = Integer.parseInt(s);
+		}
+		catch (NumberFormatException e) { 
+			throw new NumberFormatException("Not valid Number in arguments");
+		}
+	}
+	
 	private static void initFactories() {
 
 		ArrayList<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
@@ -123,7 +134,7 @@ public class Main {
 	}
 
 	private static void startBatchMode() throws IOException {
-		// TODO complete this method to start the simulation
+		// TODO complete this method to start the simulation iniciar ts, controller... ect y al final impripir por pantalla o fichero
 	}
 
 	private static void start(String[] args) throws IOException {
