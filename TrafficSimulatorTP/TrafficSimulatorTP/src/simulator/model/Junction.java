@@ -98,8 +98,8 @@ public class Junction extends SimulatedObject {
 			
 			for(Vehicle v : l) { // Quita los vehiculos de la cola
 				v.advance(time);
-				l.remove(v); 
 			}
+			l.clear();
 		}
 			
 		int index = lsStrategy.chooseNextGreen(carreterasEntrantes, lista_cola, currGreen, lastSwitchingTime, time);

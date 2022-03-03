@@ -10,8 +10,7 @@ public class MoveFirstStrategy implements DequeuingStrategy {
 		
 		List<Vehicle> v = new ArrayList<Vehicle>(1);
 		
-		if(q.size() > 0) {
-			
+		if(q.size() > 0) {		
 			v.add(q.get(0));
 		}
 			

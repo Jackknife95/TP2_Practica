@@ -144,7 +144,7 @@ public abstract class Road extends SimulatedObject {
 		
 	void addContamination(int c) {
 			
-			if(c > 0) {
+			if(c >= 0) {
 				this.total_contamination += c;
 			}
 			else{

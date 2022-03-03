@@ -82,7 +82,7 @@ public class Main {
 		cmdLineOptions.addOption(Option.builder("i").longOpt("input").hasArg().desc("Events input file").build());
 		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
-		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").desc("Ticks to the simulator’s main loop (default value is 10)").build());
+		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulator’s main loop (default value is 10)").build());
 		return cmdLineOptions;
 	}
 
@@ -106,9 +106,16 @@ public class Main {
 	}
 	
 	private static void parseTicksOption(CommandLine line) throws ParseException {
-		String s =line.getOptionValue("t", _timeLimitDefaultValue.toString());
+	
+	String s = line.getOptionValue("t");
+
 		try {
-			ticks = Integer.parseInt(s);
+			if(s != null) {
+				ticks = Integer.parseInt(s);
+			}
+			else {
+				ticks = _timeLimitDefaultValue;
+			}			
 		}
 		catch (NumberFormatException e) { 
 			throw new NumberFormatException("Not valid Number in arguments");
@@ -120,14 +127,12 @@ public class Main {
 		ArrayList<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
 		lsbs.add( new RoundRobinStrategyBuilder() );
 		lsbs.add( new MostCrowdedStrategyBuilder() );
-		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory
-		<>(lsbs);
+		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory<>(lsbs);
 		
 		ArrayList<Builder<DequeuingStrategy>> dqbs = new ArrayList<>();
 		dqbs.add( new MoveFirstStrategyBuilder() );
 		dqbs.add( new MoveAllStrategyBuilder() );
-		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(
-		dqbs);
+		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(dqbs);
 		
 		ArrayList<Builder<Event>> ebs = new ArrayList<>();
 		ebs.add( new NewJunctionEventBuilder(lssFactory,dqsFactory) );
@@ -138,7 +143,7 @@ public class Main {
 		ebs.add( new SetContClassEventBuilder() );
 		Factory<Event> eventsFactory = new BuilderBasedFactory<>(ebs);
 		
-		_eventsFactory=eventsFactory;
+		_eventsFactory = eventsFactory;
 
 	}
 
@@ -150,23 +155,19 @@ public class Main {
 		TrafficSimulator t = new TrafficSimulator();
 		
 		Controller c = new Controller(t, _eventsFactory);
-		
-		
-		
+				
 		c.loadEvents(f);
 		
 		f.close();
 		
 		if(_outFile!= null) {
-			OutputStream o= new FileOutputStream(new File(_outFile));
+			OutputStream o = new FileOutputStream(new File(_outFile));
 			c.run(ticks, o);
 			o.close();
-		}
-		
+		}		
 		else {
 			c.run(ticks, System.out);
-		}
-		
+		}		
 		
 	}
 
