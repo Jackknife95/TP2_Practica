@@ -94,7 +94,7 @@ public class Junction extends SimulatedObject {
 	void advance(int time) {
 		
 		if(currGreen != -1) {
-			List <Vehicle> l = lista_cola.get(currGreen);
+			List <Vehicle> l = dqStrategy.dequeue(lista_cola.get(currGreen));
 			
 			for(Vehicle v : l) { // Quita los vehiculos de la cola
 				v.advance(time);
