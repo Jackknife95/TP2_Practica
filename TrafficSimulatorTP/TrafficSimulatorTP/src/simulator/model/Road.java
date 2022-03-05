@@ -22,8 +22,7 @@ public abstract class Road extends SimulatedObject {
 	
 	
 	Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) { 
-		super(id);
-		
+		super(id);	
 		this.vehicles = new ArrayList<Vehicle>();
 		this.total_contamination = 0;
 		
@@ -37,32 +36,28 @@ public abstract class Road extends SimulatedObject {
 		else {
 			throw new IllegalArgumentException("The arguments must be no null objects");
 		}
-		
-		
+				
 		if(maxSpeed > 0) {
 			this.maximum_speed = maxSpeed;
-			this.current_speed_limit = maxSpeed;
-			
+			this.current_speed_limit = maxSpeed;		
 		}
 		else {
 			throw new IllegalArgumentException("The maximum speed must be a positive Integer");
 		}
 		
 		if(length > 0) {
-			this.length = length;
-			
+			this.length = length;			
 		}
 		else {
 			throw new IllegalArgumentException("The road length must be a positive Integer");
 		}
 		
-		if(contLimit > 0) {
+		if(contLimit >= 0) {
 			this.contamination_alarm_limit = contLimit;
 		}
 		else {
 			throw new IllegalArgumentException("The road contamination limit must be a positive Integer");
 		}
-	
 		
 	}
 	
@@ -76,12 +71,10 @@ public abstract class Road extends SimulatedObject {
 			}
 			else if (v1.getLocation() > v2.getLocation()) {
 				return -1;
-			}
-			
+			}		
 			return 0;
 		}
 	};
-	
 	
 	/*---------------------------------Public Getter Methods-------------------------------------*/
 	
@@ -121,49 +114,15 @@ public abstract class Road extends SimulatedObject {
 		return Collections.unmodifiableList(vehicles);
 	}
 
-	/*---------------------------------Setter Methods-------------------------------------*/
+	/*---------------------------------Road Methods-------------------------------------*/
 	
-	void setWeather(Weather w) {
-		if(w != null) {
-			this.weather_conditions = w;
+	void enter(Vehicle v)  {	
+		if(v.getSpeed() == 0 && v.getLocation() == 0) {
+			this.vehicles.add(v);
 		}
 		else {
-			throw new IllegalArgumentException("Weather conditions can't be null");
-		}
-		
-	}
-	
-	void reduceContamination(int c) { //resta la contaminacion haciendo que nunca sea menor a 0
-		this.total_contamination = Math.max(0, total_contamination - c);
-	}
-	
-	void setContamination(int c) {
-		this.total_contamination = c;
-	}
-	
-		
-	void addContamination(int c) {
-			
-			if(c >= 0) {
-				this.total_contamination += c;
-			}
-			else{
-				throw new IllegalArgumentException("Contamination must be a positive Integer");
-			}
-		}
-	
-	protected void setSpeedLimit(int s) {
-		this.current_speed_limit = s;
-	}
-	
-	void enter(Vehicle v)  {
-		
-		this.vehicles.add(v);
-		
-		if(!(v.getSpeed() == 0 && v.getLocation() == 0)) {
 			throw new IllegalArgumentException("Vehicle's speed and location must be 0");
-		}
-		
+		}		
 	}
 	
 	void exit(Vehicle v) {
@@ -171,8 +130,7 @@ public abstract class Road extends SimulatedObject {
 	}
 	
 	@Override
-	void advance(int time) {
-		
+	void advance(int time) {	
 		reduceTotalContamination();
 		updateSpeedLimit();
 		
@@ -183,18 +141,48 @@ public abstract class Road extends SimulatedObject {
 			
 		vehicles.sort(_vehiclesComparator);
 	}
+	
+	/*---------------------------------Setter Methods-------------------------------------*/
+	
+	void setWeather(Weather w) {
+		if(w != null) {
+			this.weather_conditions = w;
+		}
+		else {
+			throw new IllegalArgumentException("Weather conditions can't be null");
+		}	
+	}
+	
+	void addContamination(int c) {	
+		if(c >= 0) {
+			this.total_contamination += c;
+		}
+		else{
+			throw new IllegalArgumentException("Contamination must be a positive Integer");
+		}
+	}
+	
+	void reduceContamination(int c) { //resta la contaminacion haciendo que nunca sea menor a 0
+		this.total_contamination = Math.max(0, total_contamination - c);
+	}
+	
+	void setContamination(int c) {
+		this.total_contamination = c;
+	}
+	
+	void setSpeedLimit(int s) {
+		this.current_speed_limit = s;
+	}
 
 	@Override
-	public JSONObject report() {
-		
+	public JSONObject report() {		
 		JSONObject json = new JSONObject();
 		JSONArray json_array = new JSONArray();
 				
 		for(Vehicle v : vehicles) {
 			json_array.put(v.getId());
 		}
-		
-		
+				
 		json.put("id", getId());
 		json.put("speedlimit", current_speed_limit);
 		json.put("weather", weather_conditions.toString());

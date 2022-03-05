@@ -1,7 +1,6 @@
 package simulator.factories;
 
-import java.util.LinkedList;
-
+import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +20,7 @@ public class SetContClassEventBuilder extends Builder<Event>{
 		
 		JSONArray ja = data.getJSONArray("info");
 		
-		LinkedList<Pair<String,Integer>> l = new LinkedList<Pair<String,Integer>>();
+		ArrayList<Pair<String,Integer>> l = new ArrayList<Pair<String,Integer>>();
 		
 		for (int i=0; i<ja.length(); i++) {
 			JSONObject jo =(JSONObject) ja.get(i);
@@ -30,7 +29,6 @@ public class SetContClassEventBuilder extends Builder<Event>{
 			
 			l.add(p);
 		}
-		
 		
 		NewSetContClassEvent e = new NewSetContClassEvent(data.getInt("time"), l);
 		

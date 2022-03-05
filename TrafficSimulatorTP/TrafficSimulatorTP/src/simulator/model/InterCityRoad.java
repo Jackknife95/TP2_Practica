@@ -6,8 +6,7 @@ public class InterCityRoad extends Road{
 		super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
 	}
 	
-	private int calculateWeather(Weather weather) {
-			
+	private int calculateWeather(Weather weather) {			
 		if(weather == Weather.SUNNY) {
 			return 2;
 		}
@@ -27,8 +26,7 @@ public class InterCityRoad extends Road{
 	}
 
 	@Override
-	void reduceTotalContamination() {
-		
+	void reduceTotalContamination() {		
 		int x = calculateWeather(getWeather());
 		int tc = getTotalCO2();	
 		int contamination = (int)(((100 - x)/100.0)* tc);
@@ -46,14 +44,12 @@ public class InterCityRoad extends Road{
 	}
 
 	@Override
-	int calculateVehicleSpeed(Vehicle v) {
-		
+	int calculateVehicleSpeed(Vehicle v) {		
 		// Se calcula la velocidad más alta posible teniendo en cuenta el limite de velocidad de la carretera
 		int vel = getSpeedLimit();				
 		if(weather_conditions == Weather.STORM) {
 			vel = (int)(vel*0.8);
-		}
-		
+		}	
 		return vel;
 	}
 

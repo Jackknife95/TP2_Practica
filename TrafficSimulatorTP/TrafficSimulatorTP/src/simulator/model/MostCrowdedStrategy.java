@@ -7,7 +7,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 	 private int timeSlot;
 	 
 	public MostCrowdedStrategy(int timeSlot){
-		this.timeSlot= timeSlot;
+		this.timeSlot = timeSlot;
 	}
 
 	@Override
@@ -29,33 +29,24 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 		else if(currTime - lastSwitchingTime < timeSlot) {
 			ret = currGreen;
 		}
-		else {
-			
+		else {			
 			ret = searchNextGreen(qs, (currGreen + 1) % roads.size());
-			
-		}
-		
+		}	
 		return ret;
 	}
 	
-	
-	private int searchNextGreen(List<List<Vehicle>> qs, int startIndex ) {
-		
+	private int searchNextGreen(List<List<Vehicle>> qs, int startIndex ) {	
 		int max_index = startIndex;
 		int max = qs.get(startIndex).size(); 
-		
 		int i = (startIndex + 1)% qs.size();
 		
 		while(i != startIndex) {
 			if(qs.get(i).size() > max) {
 				max = qs.get(i).size();
 				max_index = i;
-			}	
-			
+			}		
 			i = (i + 1) % qs.size();
 		}
-	
 		return max_index;		
 	}
-
 }

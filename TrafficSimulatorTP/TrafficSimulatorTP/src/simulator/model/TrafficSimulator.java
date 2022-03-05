@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -10,12 +11,29 @@ public class TrafficSimulator {
 	
 	private RoadMap mapaCarreteras;
 	private List<Event> listaEventos;
-	private int time; // Paso de simulación
+	private int time; 					// Paso de simulación
 	
 	public TrafficSimulator() { 
-		this.mapaCarreteras = new RoadMap();
-		this.listaEventos = new SortedArrayList<Event>();
+		this.mapaCarreteras = new RoadMap();	
+		this.listaEventos = new SortedArrayList<Event>(timeComparator);
 		this.time = 0;
+	}
+	
+	static Comparator<Event> timeComparator = new Comparator<Event>() {
+		@Override
+		public int compare(Event e1, Event e2) {
+			if(e1.getTime() > e2.getTime()) {
+				return 1;
+			}
+			else if (e1.getTime() < e2.getTime()) {
+				return -1;
+			}		
+			return 0;
+		}
+	};
+	
+	public int getTime() {
+		return this.time;
 	}
 	
 	public void addEvent(Event e) {

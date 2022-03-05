@@ -1,6 +1,6 @@
 package simulator.model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import simulator.misc.Pair;
@@ -13,13 +13,15 @@ public class NewSetContClassEvent extends Event{
 		super(time);
 		
 		if(cs != null) {			
-			c = new LinkedList<Pair<String,Integer>>();			
+			this.c = new ArrayList<Pair<String,Integer>>(cs);		
+			/*
 			for( Pair< String, Integer> par : cs) {
 				c.add(par);
 			}
+			*/
 		}		
 		else {
-			throw new IllegalArgumentException("Invalid List of Pair<String,Integer>");
+			throw new IllegalArgumentException("List Pair<String,Integer> is null");
 		}
 	}
 
@@ -38,5 +40,4 @@ public class NewSetContClassEvent extends Event{
 			}			
 		}
 	}
-
 }

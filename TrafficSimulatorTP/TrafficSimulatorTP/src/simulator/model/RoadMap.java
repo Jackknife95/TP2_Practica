@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RoadMap {
-	
 	private List<Junction>listaCruces;
 	private List<Road>listaCarreteras;
 	private List<Vehicle> listaVehiculos;
@@ -36,10 +35,7 @@ public class RoadMap {
 		mapaVehiculos.clear();
 	}
 	
-	void addJunction(Junction j) {
-		
-		
-		
+	void addJunction(Junction j) {	
 		String key = j.getId();		
 		if(!mapaCruces.containsKey(key)){
 			mapaCruces.put(key, j);
@@ -51,11 +47,7 @@ public class RoadMap {
 	}
 	
 	void addRoad(Road r) {
-		
-		
-				
-		String id = r.getId();
-		
+		String id = r.getId();	
 		if(!mapaCarreteras.containsKey(id) && (mapaCruces.containsValue(r.getSrc()) && mapaCruces.containsValue(r.getDest()))) {
 			mapaCarreteras.put(id, r);
 			listaCarreteras.add(r);
@@ -65,24 +57,15 @@ public class RoadMap {
 		}
 	}
 	
-	
-	void addVehicle(Vehicle v) {
-		
-		
+	void addVehicle(Vehicle v) {	
 		String id = v.getId();
-		
 		if(!mapaVehiculos.containsKey(id)) {
 			
-			int i = 0;
 			boolean validItinerary = true;
-			List<Junction> itinerary = new ArrayList<Junction>(v.getItinerary());
-			
-			while ((i < (itinerary.size() - 1)) && validItinerary) {
-				
-				if(itinerary.get(i).roadTo(itinerary.get(i+1)) == null) {
+			for(int i = 0; i < v.getItinerary().size()-1;i++) {
+				if(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)) == null) {
 					validItinerary = false;
-				}				
-				i++;
+				}
 			}
 			
 			if(validItinerary) {
@@ -90,9 +73,8 @@ public class RoadMap {
 				listaVehiculos.add(v);
 			}
 			else {
-				throw new IllegalArgumentException("Excepción addVehicle: el itinerario es inválido");
-			}
-			
+				throw new IllegalArgumentException("Excepción addVehicle: el itinerario no es valido");
+			}		
 		}
 		else {
 			throw new IllegalArgumentException("Excepción addVehicle: ya existe un vehículo con ese identificador");
@@ -100,35 +82,28 @@ public class RoadMap {
 			
 	}
 	
-	
-	public Junction getJunction(String s) {
-		
+	public Junction getJunction(String s) {	
 		return mapaCruces.get(s);
 	}
 	
 	
-	public Road getRoad(String s) {
-		
+	public Road getRoad(String s) {	
 		return mapaCarreteras.get(s);
 	}
 	
-	public Vehicle getVehicle(String s) {
-		
+	public Vehicle getVehicle(String s) {	
 		return mapaVehiculos.get(s);
 	}
 	
-	public List<Vehicle> getVehicles(){
-		
+	public List<Vehicle> getVehicles(){	
 		return Collections.unmodifiableList(new ArrayList<Vehicle>(listaVehiculos));
 	}
 	
 	public List<Road> getRoads(){
-
 		return Collections.unmodifiableList(new ArrayList<Road>(listaCarreteras));
 	}
 	
 	public List<Junction> getJunctions(){
-
 		return Collections.unmodifiableList(new ArrayList<Junction>(listaCruces));
 	}
 	
@@ -142,16 +117,14 @@ public class RoadMap {
 		}		
 		jo.put("junctions",ja);
 		
-		
-		ja= new JSONArray();
+		ja = new JSONArray();
 		
 		for(Road r : listaCarreteras) {
 			ja.put(r.report());
 		}		
-		jo.put("roads", ja);
+		jo.put("roads", ja);		
 		
-		
-		ja= new JSONArray();
+		ja = new JSONArray();
 		
 		for(Vehicle v : listaVehiculos) {
 			ja.put(v.report());

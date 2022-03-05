@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
+public class Vehicle extends SimulatedObject{
 	
 	private List<Junction> itinerary;			
 	
@@ -36,6 +36,8 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		this.totalContamination = 0;
 		this.totalTravelledDistance = 0;
 		this.status = VehicleStatus.PENDING;
+		this.road = null;
+		this.location = 0;
 		
 		if(maxSpeed <= 0 ) {
 			throw new IllegalArgumentException("the maximum speed must be a postive Integer");		
@@ -69,7 +71,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		}
 		else if(status == VehicleStatus.TRAVELING) {
 			
-			currentSpeed = (Math.min(s, maximumSpeed));
+			currentSpeed = Math.min(s, maximumSpeed);
 		}	
 	}
 	
@@ -94,9 +96,6 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		this.location = location;
 	}
 
-	
-	
-	
 	/*---------------------------------Public Getter Methods-------------------------------------*/
 	
 	public int getSpeed() {
@@ -131,19 +130,12 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		return this.road;
 	}
 	/*---------------------------------Default Methods-------------------------------------*/
-	
-	@Override
-	public int compareTo(Vehicle v) {
-		
-		return v.getLocation() - this.location;
-	}
-	
+
 	@Override
 	void advance(int time) {
 		
-		int prevLocation = location;
-
 		if(status == VehicleStatus.TRAVELING) {
+			int prevLocation = location;
 			
 			setLocation(Math.min(location + currentSpeed, road.getLength()));
 			
@@ -158,10 +150,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 			if(location == road.getLength()) {	
 				itineraryPos++;
 				itinerary.get(itineraryPos).enter(this);
+				setSpeed(0);						// No tocar, importante en este orden
 				setStatus(VehicleStatus.WAITING);
-				setSpeed(0);
 			}
-					
 		}
 	}
 	
@@ -170,25 +161,24 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle>{
 		switch(status) {
 			case PENDING:		
 				this.road = itinerary.get(0).roadTo(itinerary.get(1));
-				this.location = 0;
-				this.status = VehicleStatus.TRAVELING;
-				this.road.enter(this);	
+				this.road.enter(this);
+				this.status = VehicleStatus.TRAVELING;			
 			break;
 			
-			case WAITING:	
-				
+			case WAITING:				
 				if(itinerary.size() - 1 == itineraryPos) {
 					this.road.exit(this);
 					this.road = null;
-					this.location = 0;
-					status = VehicleStatus.ARRIVED;
+					setLocation(0);
+					this.status = VehicleStatus.ARRIVED;
 				}
 				else {
 					this.road.exit(this);	
-					this.road = itinerary.get(itineraryPos).roadTo(itinerary.get(itineraryPos + 1));					
+					this.road = itinerary.get(itineraryPos).roadTo(itinerary.get(itineraryPos + 1));
 					this.status = VehicleStatus.TRAVELING;
-					this.location = 0;
-					road.enter(this);					
+					setSpeed(0);
+					setLocation(0);
+					this.road.enter(this);							
 				}				
 			break;
 			

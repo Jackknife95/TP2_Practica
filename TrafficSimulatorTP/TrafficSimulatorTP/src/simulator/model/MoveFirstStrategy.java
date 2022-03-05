@@ -6,15 +6,12 @@ import java.util.List;
 public class MoveFirstStrategy implements DequeuingStrategy {
 	
 	@Override
-	public List<Vehicle> dequeue(List<Vehicle> q) {
-		
+	public List<Vehicle> dequeue(List<Vehicle> q) {		
 		List<Vehicle> v = new ArrayList<Vehicle>(1);
 		
 		if(q.size() > 0) {		
 			v.add(q.get(0));
 		}
-			
-		return v;
-		
+		return v;	
 	}
 }

@@ -1,8 +1,6 @@
 package simulator.factories;
 
-import java.util.LinkedList;
-
-
+import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +19,7 @@ public class NewVehicleEventBuilder extends Builder<Event>{
 		
 		JSONArray jo = data.getJSONArray("itinerary");
 		
-		LinkedList<String> l = new LinkedList<String>();
+		ArrayList<String> l = new ArrayList<String>();
 		
 		for (int i =0; i < jo.length();i++) {
 			l.add(jo.get(i).toString());

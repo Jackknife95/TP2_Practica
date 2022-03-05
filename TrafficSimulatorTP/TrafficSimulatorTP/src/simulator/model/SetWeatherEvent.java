@@ -1,6 +1,6 @@
 package simulator.model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import simulator.misc.Pair;
@@ -9,20 +9,18 @@ public class SetWeatherEvent extends Event{
 
 	List<Pair<String,Weather>> w;
 	
-	public SetWeatherEvent(int time, List<Pair<String,Weather>> ws) {
-		
+	public SetWeatherEvent(int time, List<Pair<String,Weather>> ws) {		
 		super(time);
-		
 		if(ws != null) {
-			w = new LinkedList<Pair<String,Weather>>();
-			
+			this.w = new ArrayList<Pair<String,Weather>>(ws);			
+			/*
 			for(Pair<String,Weather> par : ws) {
 				w.add(par);
 			}
-			
+			*/
 		}		
 		else {		
-			throw new IllegalArgumentException("Invalid List of Pair<String,Weather>");
+			throw new IllegalArgumentException("List Pair<String,Weather> is null");
 		}
 		
 	}
