@@ -29,8 +29,9 @@ public class NewVehicleEvent extends Event {
 		}
 		
 		Vehicle v = new Vehicle(id, maxSpeed, contClass, listJun);
+		
+		v.moveToNextRoad();
 		map.addVehicle(v);
-		v.moveToNextRoad();					
 	}
 
 }

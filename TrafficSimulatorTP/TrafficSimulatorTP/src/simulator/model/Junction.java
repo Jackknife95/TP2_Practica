@@ -82,8 +82,8 @@ public class Junction extends SimulatedObject {
 			
 			for(Vehicle v : l) { 		// Quita los vehiculos de la cola
 				v.moveToNextRoad();
-				lista_cola.get(currGreen).remove(v);			
-				Road key = carreterasEntrantes.get(currGreen);   
+				Road key = carreterasEntrantes.get(currGreen); 
+				lista_cola.get(currGreen).remove(v);
 				mapa_carretera_cola.get(key).remove(v);
 			}	
 		}
@@ -118,7 +118,7 @@ public class Junction extends SimulatedObject {
 			String id = carreterasEntrantes.get(i).getId();
 				
 			JSONArray vehicles = new JSONArray(); 				// Lista de vehiculos de la cola ordenada
-			for(int j = 0; j < lista_cola.get(i).size(); j++) {
+			for(int j = 0; j < lista_cola.get(i).size()-1; j++) {
 				vehicles.put(lista_cola.get(i).get(j).getId());
 			}
 			

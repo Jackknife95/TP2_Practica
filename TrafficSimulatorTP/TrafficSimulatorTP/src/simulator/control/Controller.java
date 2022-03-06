@@ -53,7 +53,7 @@ public class Controller {
 		PrintStream p = new PrintStream(out);
 		
 		p.println("{");
-		p.println( "\"states\" :[");
+		p.println( "  \"states\": [");
 		
 		for(int i = 0; i < n; i++) {
 			sim.advance();
@@ -62,7 +62,9 @@ public class Controller {
 				p.println(",");
 			}			
 		}
-		p.println("]}");		
+		p.println();
+		p.println("]");	
+		p.println("}");
 		p.close();
 	}
 	

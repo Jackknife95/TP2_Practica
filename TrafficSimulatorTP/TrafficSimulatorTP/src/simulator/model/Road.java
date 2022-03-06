@@ -118,7 +118,9 @@ public abstract class Road extends SimulatedObject {
 	
 	void enter(Vehicle v)  {	
 		if(v.getSpeed() == 0 && v.getLocation() == 0) {
-			this.vehicles.add(v);
+			if (!vehicles.contains(v)) {
+				this.vehicles.add(v);
+			}
 		}
 		else {
 			throw new IllegalArgumentException("Vehicle's speed and location must be 0");
@@ -179,7 +181,7 @@ public abstract class Road extends SimulatedObject {
 		JSONObject json = new JSONObject();
 		JSONArray json_array = new JSONArray();
 				
-		for(Vehicle v : vehicles) {
+		for(Vehicle v : getVehicles()) {
 			json_array.put(v.getId());
 		}
 				

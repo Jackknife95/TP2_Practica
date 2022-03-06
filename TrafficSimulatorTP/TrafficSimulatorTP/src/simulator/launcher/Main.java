@@ -148,7 +148,6 @@ public class Main {
 	}
 
 	private static void startBatchMode() throws IOException {
-		// TODO Comprobar
 		
 		InputStream f = new FileInputStream(new File(_inFile));
 		
