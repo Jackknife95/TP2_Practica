@@ -10,4 +10,8 @@ public class NewCityRoadEvent extends NewRoadEvent{
 	protected Road createRoad(Junction srcJ, Junction destJ) {
 		return new CityRoad(id, srcJ, destJ, maxSpeed, co2Limit, length, weather);
 	}
+	
+	public String toString() {
+		return "New City Road'"+id+"'";
+	}
 }

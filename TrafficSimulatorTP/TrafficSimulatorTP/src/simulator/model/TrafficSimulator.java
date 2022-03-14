@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import org.json.JSONObject;
 
 import simulator.misc.SortedArrayList;
 
-public class TrafficSimulator {
-	
+public class TrafficSimulator implements Observable<TrafficSimObserver> {
+	private List<TrafficSimObserver> observers;
 	private RoadMap mapaCarreteras;
 	private List<Event> listaEventos;
 	private int time; 					// Paso de simulación
@@ -17,6 +18,7 @@ public class TrafficSimulator {
 		this.mapaCarreteras = new RoadMap();	
 		this.listaEventos = new SortedArrayList<Event>(timeComparator);
 		this.time = 0;
+		this.observers= new ArrayList<TrafficSimObserver>();
 	}
 	
 	static Comparator<Event> timeComparator = new Comparator<Event>() {
@@ -38,29 +40,56 @@ public class TrafficSimulator {
 	
 	public void addEvent(Event e) {
 		listaEventos.add(e);
+		
+		for(TrafficSimObserver t : observers) {
+			t.onEventAdded(mapaCarreteras, listaEventos, e, time);
+		}
+		
 	}
 
 	
 	public void advance() {
-		this.time++;
+		try {
+			this.time++;
 			
-		while(listaEventos.size() > 0 && listaEventos.get(0).getTime() == time) {
-			listaEventos.remove(0).execute(mapaCarreteras);
+			for(TrafficSimObserver t : observers) {
+				t.onAdvanceStart(mapaCarreteras, listaEventos, time);
+			}
+				
+			while(listaEventos.size() > 0 && listaEventos.get(0).getTime() == time) {
+				listaEventos.remove(0).execute(mapaCarreteras);
+			}
+			
+			for(Junction j : mapaCarreteras.getJunctions()) {
+				j.advance(time);
+			}
+			
+			for(Road r : mapaCarreteras.getRoads()) {
+				r.advance(time);
+			}	
+			
+			for(TrafficSimObserver t : observers) {
+				t.onAdvanceEnd(mapaCarreteras, listaEventos, time);
+			}
 		}
-		
-		for(Junction j : mapaCarreteras.getJunctions()) {
-			j.advance(time);
+		catch(Exception e) {
+			for(TrafficSimObserver t : observers) {
+				t.onError(e.getMessage());
+			}
+			//TODO REVISAR POR SI ACASO
+			throw e;
 		}
-		
-		for(Road r : mapaCarreteras.getRoads()) {
-			r.advance(time);
-		}	
 	}
 	
 	public void reset() {
 		this.mapaCarreteras.reset();
 		this.listaEventos.clear();
 		this.time = 0;
+		
+		for(TrafficSimObserver t : observers) {
+			t.onReset(mapaCarreteras, listaEventos, time);
+		}
+		
 	}
 	
 	public JSONObject report() {
@@ -70,6 +99,24 @@ public class TrafficSimulator {
 		jo.put("state", mapaCarreteras.report());		
 		
 		return jo;
+	}
+
+	@Override
+	public void addObserver(TrafficSimObserver o) {
+		
+		observers.add(o);
+		
+		for(TrafficSimObserver t : observers) {
+			t.onRegister(mapaCarreteras, listaEventos, time);
+		}
+		
+	}
+
+	@Override
+	public void removeObserver(TrafficSimObserver o) {
+		
+		observers.remove(o);
+		
 	}
 	
 }

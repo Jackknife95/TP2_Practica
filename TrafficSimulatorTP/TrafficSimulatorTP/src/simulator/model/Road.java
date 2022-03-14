@@ -199,5 +199,10 @@ public abstract class Road extends SimulatedObject {
 	abstract void updateSpeedLimit();
 	
 	abstract int calculateVehicleSpeed(Vehicle v);
+
+	public double getCO2Limit() {
+		
+		return this.contamination_alarm_limit;
+	}
 	
 }

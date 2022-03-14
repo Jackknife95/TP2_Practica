@@ -10,4 +10,8 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 	protected Road createRoad(Junction srcJ, Junction destJ) {	
 		return new InterCityRoad(id, srcJ, destJ, maxSpeed, co2Limit, length, weather);
 	} 
+	
+	public String toString() {
+		return "New Intercity Road'"+id+"'";
+	}
 }

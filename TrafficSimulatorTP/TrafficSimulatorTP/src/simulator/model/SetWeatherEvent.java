@@ -40,5 +40,5 @@ public class SetWeatherEvent extends Event{
 			}			
 		}		
 	}
-
+	//TODO hacer toString?
 }

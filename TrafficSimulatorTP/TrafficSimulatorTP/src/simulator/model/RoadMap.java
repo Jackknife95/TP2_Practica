@@ -133,4 +133,10 @@ public class RoadMap {
 		
 		return jo;
 	}
+
+	public Object getVehilces() {
+		// TODO Auto-generated method stub
+		ArrayList<Vehicle> ar=new ArrayList<Vehicle>(listaVehiculos);
+		return ar;
+	}
 }

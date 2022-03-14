@@ -40,4 +40,5 @@ public class NewSetContClassEvent extends Event{
 			}			
 		}
 	}
+	//TODO hacer toString?
 }

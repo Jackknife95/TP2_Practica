@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +134,25 @@ public class Junction extends SimulatedObject {
 		json.put("queues", queues);
 			
 		return json;
+	}
+
+	public int getX() {
+		return this.x;
+	}
+
+	public int getY() {
+		
+		return this.y;
+	}
+
+	public int getGreenLightIndex() {
+		
+		return this.currGreen;//lo dijo DAI XD
+	}
+
+	public RenderingHints getInRoads() {
+		
+		return (RenderingHints) this.carreterasEntrantes; //TODO REVISAR 
 	}
 
 }
