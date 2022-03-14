@@ -118,9 +118,10 @@ public class Junction extends SimulatedObject {
 			String id = carreterasEntrantes.get(i).getId();
 				
 			JSONArray vehicles = new JSONArray(); 				// Lista de vehiculos de la cola ordenada
-			for(int j = 0; j < lista_cola.get(i).size()-1; j++) {
+			for(int j = 0; j < lista_cola.get(i).size()-1; j++) { 
 				vehicles.put(lista_cola.get(i).get(j).getId());
 			}
+			
 			
 			JSONObject json2 = new JSONObject();
 			json2.put("road", id);
