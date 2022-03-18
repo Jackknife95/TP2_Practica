@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -42,6 +44,7 @@ public class Main {
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
     private static int ticks;
+    private static String _guiMode = null;
 	private static void parseArgs(String[] args) {
 
 		// define the valid command line options
@@ -57,7 +60,7 @@ public class Main {
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseTicksOption(line);
-
+			parseGuiOption(line);
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
 			//
@@ -83,6 +86,7 @@ public class Main {
 		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulator’s main loop (default value is 10)").build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Simulastion gui mode").build());
 		return cmdLineOptions;
 	}
 
@@ -120,6 +124,30 @@ public class Main {
 		catch (NumberFormatException e) { 
 			throw new NumberFormatException("Not valid Number in arguments");
 		}
+	}
+	
+	private static void parseGuiOption(CommandLine line) throws ParseException {
+		
+		_guiMode= "gui";
+		
+		String s = line.getOptionValue("m").toLowerCase();
+		
+
+			if(s!=null) {
+				
+				if(s.equals("gui")) {
+					
+				}
+				
+				else if(s.equals("console")) {
+					_guiMode= "console";
+				}
+				
+				else {
+					throw new IllegalArgumentException(s + " is not a valid gui mode");
+				}
+			}
+		
 	}
 	
 	private static void initFactories() {
@@ -169,11 +197,34 @@ public class Main {
 		}		
 		
 	}
+	
+	private static void startGUIMode() throws IOException {
+		
+		TrafficSimulator t = new TrafficSimulator();
+		Controller c = new Controller(t, _eventsFactory);
+		if(_inFile!=null) {
+			InputStream f = new FileInputStream(new File(_inFile));
+			c.loadEvents(f);
+			f.close();
+		}
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+			new MainWindow(c); //TODO crear la clase main window
+			}
+		});
+	}
 
 	private static void start(String[] args) throws IOException {
 		initFactories();
 		parseArgs(args);
-		startBatchMode();
+		if(_guiMode.equals("gui")) {
+			startGUIMode();
+		}
+		if(_guiMode.equals("console")) {
+			startBatchMode();
+		}
 	}
 
 	// example command lines:
