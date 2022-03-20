@@ -40,5 +40,17 @@ public class NewSetContClassEvent extends Event{
 			}			
 		}
 	}
-	//TODO hacer toString?
+	
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append("New Cont Class: ");
+		
+		for(Pair<String,Integer> par : c) {
+			s.append(par.getFirst()).append(",").append(par.getSecond()).append(",");		
+		}
+		return s.toString();
+	}
+	
 }

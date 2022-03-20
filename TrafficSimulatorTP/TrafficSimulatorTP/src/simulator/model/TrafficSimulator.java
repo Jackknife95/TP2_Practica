@@ -18,7 +18,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 		this.mapaCarreteras = new RoadMap();	
 		this.listaEventos = new SortedArrayList<Event>(timeComparator);
 		this.time = 0;
-		this.observers= new ArrayList<TrafficSimObserver>();
+		this.observers = new ArrayList<TrafficSimObserver>();
 	}
 	
 	static Comparator<Event> timeComparator = new Comparator<Event>() {
@@ -72,11 +72,10 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 				t.onAdvanceEnd(mapaCarreteras, listaEventos, time);
 			}
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			for(TrafficSimObserver t : observers) {
 				t.onError(e.getMessage());
 			}
-			//TODO REVISAR POR SI ACASO
 			throw e;
 		}
 	}
