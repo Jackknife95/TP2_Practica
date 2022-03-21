@@ -69,6 +69,12 @@ public class Controller {
 		p.close();
 	}
 	
+	public void run(int n) {	
+		for(int i = 0; i < n; i++) {
+			sim.advance();			
+		}
+	}
+	
 	public void reset() {
 		sim.reset();
 	}

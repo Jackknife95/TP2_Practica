@@ -24,7 +24,12 @@ public class MainWindow extends JFrame{
 		
 		this.setContentPane(mainPanel);
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
+<<<<<<< HEAD
 	//	mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
+=======
+		/*
+		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
+>>>>>>> 396ebb156387888c9b392e8c855939f5d904199a
 		
 		JPanel viewsPanel = new JPanel(new GridLayout(1, 2));
 		mainPanel.add(viewsPanel, BorderLayout.CENTER);
@@ -62,6 +67,7 @@ public class MainWindow extends JFrame{
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.pack();
 		this.setVisible(true); 
+		*/
 	}
 	
 	private JPanel createViewPanel(JComponent c, String title) {
