@@ -1,4 +1,5 @@
-package extra.jtable;
+package simulator.view;
+
 
 import java.util.List;
 
@@ -8,9 +9,8 @@ import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
-import simulator.view.EventEx;
 
-public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver {
+public class JunctionsTableModel extends AbstractTableModel implements TrafficSimObserver {
 
 	/**
 	 * 
@@ -18,10 +18,10 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	private static final long serialVersionUID = 1L;
 	
 	
-	private List<EventEx> _events;
-	private String[] _colNames = { "#", "Time", "Priority" };
+	private List<JunctionEx> _junctions;
+	private String[] _colNames = { "Id", "Green", "Queues"};
 
-	public EventsTableModel(Controller _ctrl) {
+	public JunctionsTableModel(Controller _ctrl) {
 		_ctrl.addObserver(this);
 	}
 
@@ -31,11 +31,11 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		// en este caso de un ArrayList, hay que notificar los cambios.
 		
 		// We need to notify changes, otherwise the table does not refresh.
-		fireTableDataChanged();;		
+		fireTableDataChanged();
 	}
 	
-	public void setEventsList(List<EventEx> events) {
-		_events = events;
+	public void setEventsList(List<JunctionEx> junction) {
+		_junctions = junction;
 		update();
 	}
 
@@ -65,7 +65,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	//
 	// the number of row, like those in the events list
 	public int getRowCount() {
-		return _events == null ? 0 : _events.size();
+		return _junctions == null ? 0 : _junctions.size();
 	}
 
 	@Override
@@ -78,16 +78,21 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Object s = null;
 		switch (columnIndex) {
+		// "Id", "Green", "Queues","Max. Speed","Speed Limit","Total CO2","CO2 Limit"
 		case 0:
 			s = rowIndex;
 			break;
 		case 1:
-			s = _events.get(rowIndex).getTime();
+			s = _junctions.get(rowIndex).get_id();
 			break;
 		case 2:
-			s = _events.get(rowIndex).getPriority();
+			s = _junctions.get(rowIndex).get_green();
+			break;
+		case 3 :
+			s= _junctions.get(rowIndex).get_queues();
 			break;
 		}
+		
 		return s;
 	}
 

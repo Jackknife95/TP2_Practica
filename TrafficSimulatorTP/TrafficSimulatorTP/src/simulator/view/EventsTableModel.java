@@ -1,4 +1,4 @@
-package extra.jtable;
+package simulator.view;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
-import simulator.view.EventEx;
 
 public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver {
 

@@ -36,6 +36,7 @@ import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
+import simulator.view.MainWindow;
 
 public class Main {
 
@@ -56,11 +57,12 @@ public class Main {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
+			parseGuiOption(line);
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseTicksOption(line);
-			parseGuiOption(line);
+			
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
 			//
@@ -100,9 +102,15 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
-			throw new ParseException("An events file is missing");
+		if(_guiMode.equals("gui")) {
+			
 		}
+		else {
+			if (_inFile == null) {
+				throw new ParseException("An events file is missing");
+			}
+		}
+		
 	}
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
@@ -211,7 +219,7 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-			new MainWindow(c); //TODO crear la clase main window
+			new MainWindow(c);
 			}
 		});
 	}

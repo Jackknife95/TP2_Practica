@@ -1,14 +1,16 @@
 package simulator.view;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
 import simulator.control.Controller;
 
 public class MainWindow extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Controller _ctrl;
 	
 	public MainWindow(Controller ctrl) {
@@ -22,7 +24,7 @@ public class MainWindow extends JFrame{
 		
 		this.setContentPane(mainPanel);
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
-		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
+	//	mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
 		
 		JPanel viewsPanel = new JPanel(new GridLayout(1, 2));
 		mainPanel.add(viewsPanel, BorderLayout.CENTER);
@@ -36,12 +38,22 @@ public class MainWindow extends JFrame{
 		viewsPanel.add(mapsPanel);
 		
 		// tables
-		JPanel eventsView = createViewPanel(new JTable(new
-		EventsTableModel(_ctrl), "Events"), 
+		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(eventsView);
 		// TODO add other tables 
+	
+		JPanel vehiclesView = createViewPanel(new JTable(new VehiclesTableModel(_ctrl)), "Vehicles");
+		vehiclesView.setPreferredSize(new Dimension(500, 200));
+		tablesPanel.add(vehiclesView);
+	
+		JPanel roadsView = createViewPanel(new JTable(new RoadsTableModel(_ctrl)), "Roads");
+		roadsView.setPreferredSize(new Dimension(500, 200));
+		tablesPanel.add(roadsView);
 		
+		JPanel junctionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Junctions");
+		vehiclesView.setPreferredSize(new Dimension(500, 200));
+		tablesPanel.add(junctionsView);
 		// maps
 		JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");
 		mapView.setPreferredSize(new Dimension(500, 400));
@@ -51,5 +63,12 @@ public class MainWindow extends JFrame{
 		this.pack();
 		this.setVisible(true); 
 	}
+	
+	private JPanel createViewPanel(JComponent c, String title) {
+		JPanel p = new JPanel( new BorderLayout() );
+		// TODO add a framed border to p with a title
+		p.add(new JScrollPane(c));
+		return p;
+		} 
 	
 }
