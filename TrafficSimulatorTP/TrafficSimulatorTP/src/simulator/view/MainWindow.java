@@ -7,9 +7,6 @@ import simulator.control.Controller;
 
 public class MainWindow extends JFrame{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Controller _ctrl;
 	
@@ -24,12 +21,9 @@ public class MainWindow extends JFrame{
 		
 		this.setContentPane(mainPanel);
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
-<<<<<<< HEAD
-	//	mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
-=======
+		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
 		/*
 		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
->>>>>>> 396ebb156387888c9b392e8c855939f5d904199a
 		
 		JPanel viewsPanel = new JPanel(new GridLayout(1, 2));
 		mainPanel.add(viewsPanel, BorderLayout.CENTER);

@@ -45,11 +45,14 @@ public class NewSetContClassEvent extends Event{
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append("New Cont Class: ");
+		s.append("Change CO2 class: ");
 		
+		s.append("[");
 		for(Pair<String,Integer> par : c) {
-			s.append(par.getFirst()).append(",").append(par.getSecond()).append(",");		
+			s.append("(").append(par.getFirst()).append(",").append(par.getSecond()).append(") ");	
 		}
+	
+		s.append("]");
 		return s.toString();
 	}
 	

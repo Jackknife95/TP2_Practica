@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import simulator.model.Road;
 import simulator.model.RoadMap;
@@ -27,32 +28,31 @@ public class ChangeWeatherDialog extends JDialog {
 	
 	public ChangeWeatherDialog() {
 		
+		this.state = 0;
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(new JLabel("Selecciona una Carretera y una Condición Atmosférica"));
-		
+		mainPanel.add(new JLabel("Schedule an event to change the weather of a road"
+				+ " after a given number of simulations ticks from now."));
 		
 		JPanel panel2 = new JPanel();
-		roads = new JComboBox<Road>();
-		weather = new JComboBox<Weather>();
-		ticks = new JSpinner();
-		roads.setModel(new DefaultComboBoxModel());
-		weather.setModel(new DefaultComboBoxModel());
-		ticks.setModel((SpinnerModel) new DefaultComboBoxModel());
+		roads = new JComboBox<Road>(new DefaultComboBoxModel<>());
+		weather = new JComboBox<Weather>(new DefaultComboBoxModel<>(Weather.values()));
+		ticks = new JSpinner(new  SpinnerNumberModel(1, 1, 100, 1));
 		
 		panel2.add(roads);
 		panel2.add(weather);
 		panel2.add(ticks);
 		mainPanel.add(panel2);
 		
+		// Panel de Botones
 		JPanel ButtonPanel = new JPanel();
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(roads.getSelectedItem() != null) {
-					setVisible(false);
 					setState(1);
+					setVisible(false);				
 				}
 			}			
 		});
@@ -61,17 +61,15 @@ public class ChangeWeatherDialog extends JDialog {
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
 				setState(0);
+				setVisible(false);			
 			}		
 		});	
 		
-		ButtonPanel.add(ok);
 		ButtonPanel.add(cancel);
-		
+		ButtonPanel.add(ok);		
 		mainPanel.add(ButtonPanel);	
 		this.add(mainPanel);
-		
 	}
 	
 	public int open(RoadMap roadMap) {

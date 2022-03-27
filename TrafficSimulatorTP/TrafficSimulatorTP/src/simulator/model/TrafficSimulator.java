@@ -72,7 +72,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 				t.onAdvanceEnd(mapaCarreteras, listaEventos, time);
 			}
 		}
-		catch (Exception e) {
+		catch (IllegalArgumentException e) {
 			for(TrafficSimObserver t : observers) {
 				t.onError(e.getMessage());
 			}
@@ -101,21 +101,14 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	}
 
 	@Override
-	public void addObserver(TrafficSimObserver o) {
-		
-		observers.add(o);
-		
-		for(TrafficSimObserver t : observers) {
-			t.onRegister(mapaCarreteras, listaEventos, time);
-		}
-		
+	public void addObserver(TrafficSimObserver o) {	
+		observers.add(o);	
+		o.onRegister(mapaCarreteras, listaEventos, time);	
 	}
 
 	@Override
-	public void removeObserver(TrafficSimObserver o) {
-		
-		observers.remove(o);
-		
+	public void removeObserver(TrafficSimObserver o) {		
+		observers.remove(o);	
 	}
 	
 }
