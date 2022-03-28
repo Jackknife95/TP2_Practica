@@ -2,6 +2,7 @@ package simulator.view;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import simulator.control.Controller;
 
@@ -62,11 +63,12 @@ public class MainWindow extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true); 
+
 	}
 	
 	private JPanel createViewPanel(JComponent c, String title) {
 		JPanel p = new JPanel( new BorderLayout() );
-		// TODO add a framed border to p with a title
+		p.setBorder(new TitledBorder(title));
 		p.add(new JScrollPane(c));
 		return p;
 		} 
