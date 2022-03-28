@@ -59,10 +59,11 @@ public class MainWindow extends JFrame{
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
 		// TODO add a map for MapByRoadComponent
-		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true); 
-		
+
 	}
 	
 	private JPanel createViewPanel(JComponent c, String title) {

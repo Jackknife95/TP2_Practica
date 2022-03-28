@@ -2,6 +2,7 @@ package simulator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,9 +59,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	private void initGUI() {
 		_stopped = true;
+		setLayout(new BorderLayout());
 		_toolBar = new JToolBar();
 		this.add(_toolBar, BorderLayout.PAGE_START);
-			
+		
 		// Botón para cargar el Fichero de Eventos
 		_loadEventButton = new JButton();
 		_loadEventButton.setToolTipText("Open File");	// Mensaje que aparece cuando se sitúa el cursor encima del botón	
@@ -135,7 +137,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		// Botón para salir del GUI
 		_exitButton = new JButton();
 		_exitButton.setToolTipText("Quit");
-		_exitButton.setIcon(loadImage("resources/icons/exit"));
+		_exitButton.setIcon(loadImage("resources/icons/exit.png"));
 		_exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,7 +150,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			}		
 		});
 		_toolBar.add(_exitButton);
-		
 	}
 	
 	private void loadFile()  {
@@ -215,6 +216,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_loadEventButton.setEnabled(false);
 		_switchContClassButton.setEnabled(false);
 		_changeWeatherButton.setEnabled(false);
+		_exitButton.setEnabled(false);
+		_runButton.setEnabled(false);
 		run_sim((Integer) _ticksSpinner.getValue());
 	}
 	
@@ -243,6 +246,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	private void stop_sim() {
 		_stopped = true;
+		_loadEventButton.setEnabled(true);
+		_switchContClassButton.setEnabled(true);
+		_changeWeatherButton.setEnabled(true);
+		_exitButton.setEnabled(true);
+		_runButton.setEnabled(true);
 	}
 	
 	private void enableToolBar(boolean b) {
