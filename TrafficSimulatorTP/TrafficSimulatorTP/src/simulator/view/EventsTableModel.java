@@ -17,8 +17,8 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	private static final long serialVersionUID = 1L;
 	
 	
-	private List<EventEx> _events;
-	private String[] _colNames = { "#", "Time", "Priority" };
+	private List<Event> _events;
+	private String[] _colNames = { "Time", "Desc." };
 
 	public EventsTableModel(Controller _ctrl) {
 		_ctrl.addObserver(this);
@@ -33,8 +33,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		fireTableDataChanged();;		
 	}
 	
-	public void setEventsList(List<EventEx> events) {
-		_events = events;
+	public void setEventsList(List<Event> events) {
 		update();
 	}
 
@@ -84,7 +83,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 			s = _events.get(rowIndex).getTime();
 			break;
 		case 2:
-			s = _events.get(rowIndex).getPriority();
+			s = _events.get(rowIndex).toString();
 			break;
 		}
 		return s;

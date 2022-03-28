@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import simulator.control.Controller;
 import simulator.model.Event;
+import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
@@ -18,7 +19,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 	private static final long serialVersionUID = 1L;
 	
 	
-	private List<RoadEx> _roads;
+	private List<Road> _roads;
 	private String[] _colNames = { "Id", "Length", "Weather","Max. Speed","Speed Limit","Total CO2","CO2 Limit"};
 
 	public RoadsTableModel(Controller _ctrl) {
@@ -34,7 +35,7 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 		fireTableDataChanged();;		
 	}
 	
-	public void setEventsList(List<RoadEx> road) {
+	public void setEventsList(List<Road> road) {
 		_roads = road;
 		update();
 	}
@@ -83,25 +84,25 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 			s = rowIndex;
 			break;
 		case 1:
-			s = _roads.get(rowIndex).get_id();
+			s = _roads.get(rowIndex).getId();
 			break;
 		case 2:
-			s = _roads.get(rowIndex).get_length();
+			s = _roads.get(rowIndex).getLength();
 			break;
 		case 3 :
-			s= _roads.get(rowIndex).get_weather();
+			s= _roads.get(rowIndex).getWeather();
 			break;
 		case 4 :
-			s= _roads.get(rowIndex).get_maxSpeed();
+			s= _roads.get(rowIndex).getMaxSpeed();
 			break;
 		case 5 :
-			s= _roads.get(rowIndex).get_maxSpeed();
+			s= _roads.get(rowIndex).getSpeedLimit();
 			break;
 		case 6 :
-			s= _roads.get(rowIndex).get_totalCO2();
+			s= _roads.get(rowIndex).getTotalCO2();
 			break;
 		case 7 :
-			s= _roads.get(rowIndex).get_co2Limit();
+			s= _roads.get(rowIndex).getCO2Limit();
 			break;
 		}
 		

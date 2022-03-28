@@ -9,6 +9,7 @@ import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 public class VehiclesTableModel extends AbstractTableModel implements TrafficSimObserver{
 
@@ -18,7 +19,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 	private static final long serialVersionUID = 1L;
 	
 	
-	private List<VehicleEx> _vehicles;
+	private List<Vehicle> _vehicles;
 	private String[] _colNames = { "Id", "Location", "Itinerary","CO2 Class","Max. Speed","Speed","Total CO2","Distance"};
 
 	public VehiclesTableModel(Controller _ctrl) {
@@ -34,7 +35,7 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 		fireTableDataChanged();;		
 	}
 	
-	public void setEventsList(List<VehicleEx> vehicle) {
+	public void setEventsList(List<Vehicle> vehicle) {
 		_vehicles = vehicle;
 		update();
 	}
@@ -83,25 +84,25 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 			s = rowIndex;
 			break;
 		case 1:
-			s = _vehicles.get(rowIndex).get_id();
+			s = _vehicles.get(rowIndex).getId();
 			break;
 		case 2:
-			s = _vehicles.get(rowIndex).get_location();
+			s = _vehicles.get(rowIndex).getLocation();
 			break;
 		case 3 :
-			s= _vehicles.get(rowIndex).get_co2class();
+			s= _vehicles.get(rowIndex).getContClass();
 			break;
 		case 4 :
-			s= _vehicles.get(rowIndex).get_maxSpeed();
+			s= _vehicles.get(rowIndex).getMaxSpeed();
 			break;
 		case 5 :
-			s= _vehicles.get(rowIndex).get_speed();
+			s= _vehicles.get(rowIndex).getSpeed();
 			break;
 		case 6 :
-			s= _vehicles.get(rowIndex).get_totalCO2();
+			s= _vehicles.get(rowIndex).getTotalCO2();
 			break;
 		case 7 :
-			s= _vehicles.get(rowIndex).get_distance();
+			s= _vehicles.get(rowIndex).getLocation();
 			break;
 		}
 		
