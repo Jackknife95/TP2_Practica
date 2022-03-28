@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.Junction;
+import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
@@ -35,7 +36,7 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		fireTableDataChanged();
 	}
 	
-	public void setEventsList(List<Junction> junction) {
+	public void setJunctionList(List<Junction> junction) {
 		_junctions = junction;
 		update();
 	}
@@ -69,43 +70,43 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		return _junctions == null ? 0 : _junctions.size();
 	}
 
-	@Override
-	// metodo obligatorio
-	// así es como se va a cargar la tabla desde el ArrayList
-	// el índice del arrayList es el número de fila pq en este ejemplo
-	// quiero enumerarlos.
-	//
-	// returns the value of a particular cell 
+
+	// "Id", "Green", "Queues".
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Object s = null;
-		switch (columnIndex) {
-		// "Id", "Green", "Queues","Max. Speed","Speed Limit","Total CO2","CO2 Limit"
-		case 0:
-			s = rowIndex;
-			break;
-		case 1:
-			s = _junctions.get(rowIndex).getId();
-			break;
-		case 2:
-			s = _junctions.get(rowIndex).getGreenLightIndex();
-			break;
-		case 3 :
-			s= _junctions.get(rowIndex).getInRoads();
-			break;
-		}
+		String s = "";
+		Junction j = _junctions.get(rowIndex);
+		switch ( columnIndex ) {
 		
+			case 0:
+				s = j.getId();
+				break;
+			
+			case 1:
+				s = j.getGreenLightIndex() == -1 ? //
+				"NONE" : //
+				j.getInRoads().get(j.getGreenLightIndex()).getId();
+				break;
+			case 2:
+				for (Road r : j.getInRoads()) {
+				s = s + " " + r.getId() + ":" + j.getQueue(r);
+				}
+				break;
+			default:
+			assert(false);
+		}
 		return s;
 	}
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		setJunctionList(map.getJunctions());
 		
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		
+		setJunctionList(map.getJunctions());
 		
 	}
 
@@ -117,13 +118,14 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		setJunctionList(map.getJunctions());
 		
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		setJunctionList(map.getJunctions());
+		
 		
 	}
 

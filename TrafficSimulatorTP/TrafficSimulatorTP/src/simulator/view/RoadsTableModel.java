@@ -32,10 +32,10 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 		// en este caso de un ArrayList, hay que notificar los cambios.
 		
 		// We need to notify changes, otherwise the table does not refresh.
-		fireTableDataChanged();;		
+		fireTableDataChanged();		
 	}
 	
-	public void setEventsList(List<Road> road) {
+	public void setRoadsList(List<Road> road) {
 		_roads = road;
 		update();
 	}
@@ -81,27 +81,24 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 		switch (columnIndex) {
 		// "Id", "Length", "Weather","Max. Speed","Speed Limit","Total CO2","CO2 Limit"
 		case 0:
-			s = rowIndex;
-			break;
-		case 1:
 			s = _roads.get(rowIndex).getId();
 			break;
-		case 2:
+		case 1:
 			s = _roads.get(rowIndex).getLength();
 			break;
-		case 3 :
+		case 2 :
 			s= _roads.get(rowIndex).getWeather();
 			break;
-		case 4 :
+		case 3 :
 			s= _roads.get(rowIndex).getMaxSpeed();
 			break;
-		case 5 :
+		case 4 :
 			s= _roads.get(rowIndex).getSpeedLimit();
 			break;
-		case 6 :
+		case 5 :
 			s= _roads.get(rowIndex).getTotalCO2();
 			break;
-		case 7 :
+		case 6 :
 			s= _roads.get(rowIndex).getCO2Limit();
 			break;
 		}
@@ -112,12 +109,12 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		setRoadsList(map.getRoads());
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		setRoadsList(map.getRoads());
 		
 	}
 
@@ -130,13 +127,13 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		setRoadsList(map.getRoads());
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
-		
+		setRoadsList(map.getRoads());
 	}
 
 	@Override

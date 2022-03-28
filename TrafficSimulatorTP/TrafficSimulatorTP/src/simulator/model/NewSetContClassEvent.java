@@ -49,7 +49,7 @@ public class NewSetContClassEvent extends Event{
 		
 		s.append("[");
 		for(Pair<String,Integer> par : c) {
-			s.append("(").append(par.getFirst()).append(",").append(par.getSecond()).append(") ");	
+			s.append("(").append(par.getFirst()).append(",").append(par.getSecond()).append(")");	
 		}
 	
 		s.append("]");

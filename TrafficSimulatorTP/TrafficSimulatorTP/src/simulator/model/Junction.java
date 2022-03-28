@@ -150,9 +150,14 @@ public class Junction extends SimulatedObject {
 		return this.currGreen;//lo dijo DAI XD
 	}
 
-	public RenderingHints getInRoads() {
+	public List<Road> getInRoads() {
 		
-		return (RenderingHints) this.carreterasEntrantes; //TODO REVISAR 
+		return this.carreterasEntrantes; //TODO REVISAR 
+	}
+
+	public String getQueue(Road r) {
+		
+		return r.getVehicles().toString();
 	}
 
 }
