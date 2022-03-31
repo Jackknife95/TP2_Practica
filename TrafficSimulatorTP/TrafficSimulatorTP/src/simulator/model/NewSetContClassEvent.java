@@ -46,10 +46,16 @@ public class NewSetContClassEvent extends Event{
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("Change CO2 class: ");
-		
+		int i= 0;
 		s.append("[");
 		for(Pair<String,Integer> par : c) {
-			s.append("(").append(par.getFirst()).append(",").append(par.getSecond()).append(")");	
+			
+			s.append("(").append(par.getFirst().toUpperCase()).append(", ").append(par.getSecond()).append(")");
+			
+			if(i<c.size()-1) {
+				s.append(" , ");
+			}
+			i++;
 		}
 	
 		s.append("]");
