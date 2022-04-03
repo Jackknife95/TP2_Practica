@@ -4,8 +4,11 @@ import java.awt.FlowLayout;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import simulator.control.Controller;
 import simulator.model.Event;
@@ -14,9 +17,6 @@ import simulator.model.TrafficSimObserver;
 
 public class StatusBar extends JPanel implements TrafficSimObserver {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Controller _ctrl;
 	private int time;
@@ -36,17 +36,21 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 		this.time = 0;
 		this.eventMessage = "";
 		
-		this.setLayout(new FlowLayout());
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.setBorder(BorderFactory.createLoweredBevelBorder());
 		
-		tiempo_sim = new JLabel("Time: " + time, JLabel.LEFT);
-		event_msg = new JLabel("Event added " + "(" + eventMessage + ")", JLabel.CENTER);
+		tiempo_sim = new JLabel("Time: " + time);
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setVisible(true);
+		event_msg = new JLabel(eventMessage);
 		
 		this.add(tiempo_sim);
-		this.add(event_msg);
+		this.add(Box.createHorizontalStrut(150));
+		this.add(separator);
+		this.add(event_msg);	
 	}
 	
-
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		this.time = time;
@@ -62,7 +66,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
 		this.time = time;
-		this.eventMessage = e.toString();	
+		this.eventMessage = "Event added " + "(" + e.toString() + ")";	
 	}
 
 	@Override

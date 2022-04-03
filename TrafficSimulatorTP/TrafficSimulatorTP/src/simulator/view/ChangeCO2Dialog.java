@@ -51,13 +51,13 @@ public class ChangeCO2Dialog extends JDialog {
 		}
 		
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Crea espacio en altura
-		panel2.add(new JLabel("Vehicle:"));
+		panel2.add(new JLabel("Vehicle: "));
 		panel2.add(vehicles);
 		panel2.add(Box.createHorizontalStrut(10));	// Añade separación entre un JComboBox de otro
-		panel2.add(new JLabel("CO2 Class:"));
+		panel2.add(new JLabel("CO2 Class: "));
 		panel2.add(contClass);
 		panel2.add(Box.createHorizontalStrut(10));
-		panel2.add(new JLabel("Ticks:"));
+		panel2.add(new JLabel("Ticks: "));
 		panel2.add(ticks);		
 		mainPanel.add(panel2);	
 		
