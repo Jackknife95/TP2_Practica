@@ -2,7 +2,6 @@ package simulator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -175,13 +175,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	private void changeCO2Class() {
 		
-		ChangeCO2Dialog dialog = new ChangeCO2Dialog();
-		int ret = dialog.open(roadMap);
-			
+		ChangeCO2Dialog dialog = new ChangeCO2Dialog((JFrame)SwingUtilities.getWindowAncestor(this));
+		int ret = dialog.open(roadMap);			
+		System.out.println("ret = " + ret);
 		if(ret == 1) {
 			List<Pair<String, Integer>> p = new ArrayList<Pair<String,Integer>>();
 			p.add(new Pair<String, Integer>(dialog.getVehicle().getId(), dialog.getCO2Class()));
-			
+			System.out.println(dialog.getVehicle().getId() + " " + dialog.getCO2Class());
 			try {
 				_ctrl.addEvent(new NewSetContClassEvent(time + dialog.getTicks(), p));		
 			}

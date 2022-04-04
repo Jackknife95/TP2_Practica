@@ -10,6 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -23,12 +24,14 @@ public class ChangeCO2Dialog extends JDialog {
 
 	private int status;	
 	private JComboBox<Vehicle> vehicles;
+	private DefaultComboBoxModel<Vehicle> vehiclesModel;
 	private JComboBox<Integer> contClass;
+	private DefaultComboBoxModel<Integer> contClassModel;
 	private JSpinner ticks;
 	
-	public ChangeCO2Dialog (){
-		
-		this.status = 0;
+	public ChangeCO2Dialog (JFrame frame){
+		super(frame,true);
+		status = 0;
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.setPreferredSize(new Dimension(400, 200));
@@ -41,13 +44,15 @@ public class ChangeCO2Dialog extends JDialog {
 		mainPanel.add(help_msg2);
 			
 		JPanel panel2 = new JPanel();
-		vehicles = new JComboBox<Vehicle>(new DefaultComboBoxModel<Vehicle>());
-		contClass = new JComboBox<Integer>(new DefaultComboBoxModel<Integer>());	
+		vehiclesModel = new DefaultComboBoxModel<Vehicle>();
+		contClassModel = new DefaultComboBoxModel<Integer>();
+		vehicles = new JComboBox<Vehicle>(vehiclesModel);
+		contClass = new JComboBox<Integer>(contClassModel);	
 		ticks = new JSpinner(new  SpinnerNumberModel(1, 1, 100, 1));		
 		
 		// Añadimos los números de la clase de contaminación
 		for(int i = 0; i < 10; i++) {
-			contClass.addItem(new Integer(i+1));
+			contClassModel.addElement(new Integer(i+1));
 		}
 		
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Crea espacio en altura
@@ -67,9 +72,10 @@ public class ChangeCO2Dialog extends JDialog {
 		ok.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(vehicles.getSelectedItem() != null) {
-					setStatus(1);
-					setVisible(false);		
+				if(vehiclesModel.getSelectedItem() != null) {
+					System.out.println("Entra en el if");
+					status = 1;
+					ChangeCO2Dialog.this.setVisible(false);		
 				}
 			}			
 		});
@@ -78,8 +84,8 @@ public class ChangeCO2Dialog extends JDialog {
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setStatus(0);
-				setVisible(false);
+				status = 0;
+				ChangeCO2Dialog.this.setVisible(false);
 			}		
 		});
 		
@@ -94,11 +100,14 @@ public class ChangeCO2Dialog extends JDialog {
 	
 	
 	public int open(RoadMap roadMap) {
-		
+		System.out.println("Dentro del Open");
+		vehiclesModel.removeAllElements();
 		for(Vehicle v : roadMap.getVehicles()) {
-			vehicles.addItem(v);
+			vehiclesModel.addElement(v);
 		}
+		System.out.println("Despues del for");
 		setVisible(true);		
+		System.out.println(status);
 		return this.status;
 	}
 	
@@ -113,11 +122,11 @@ public class ChangeCO2Dialog extends JDialog {
 	}
 	
 	public Vehicle getVehicle() {
-		return (Vehicle)vehicles.getSelectedItem();
+		return (Vehicle)vehiclesModel.getSelectedItem();
 	}
 	
 	public int getCO2Class() {
-		return (Integer)contClass.getSelectedItem();
+		return (Integer)contClassModel.getSelectedItem();
 	}
 	
 }
