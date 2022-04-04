@@ -260,7 +260,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		return new ImageIcon(Toolkit.getDefaultToolkit().createImage(path)); 
 	}
 	
-	
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		// Do nothing	
