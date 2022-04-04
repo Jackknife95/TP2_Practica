@@ -177,10 +177,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		
 		ChangeCO2Dialog dialog = new ChangeCO2Dialog();
 		int ret = dialog.open(roadMap);
-		
-		List<Pair<String, Integer>> p = new ArrayList<Pair<String,Integer>>();
-		
+			
 		if(ret == 1) {
+			List<Pair<String, Integer>> p = new ArrayList<Pair<String,Integer>>();
 			p.add(new Pair<String, Integer>(dialog.getVehicle().getId(), dialog.getCO2Class()));
 			
 			try {
@@ -197,8 +196,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		ChangeWeatherDialog dialog = new ChangeWeatherDialog();
 		int ret = dialog.open(roadMap);
 		
-		List<Pair<String, Weather>> p = new ArrayList<Pair<String, Weather>>();
 		if(ret == 1) {
+			List<Pair<String, Weather>> p = new ArrayList<Pair<String, Weather>>();
 			p.add(new Pair<String, Weather>(dialog.getRoad().getId(), dialog.getWeather()));
 			
 			try {
