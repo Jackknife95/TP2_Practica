@@ -43,8 +43,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 		
 		for(TrafficSimObserver t : observers) {
 			t.onEventAdded(mapaCarreteras, listaEventos, e, time);
-		}
-		
+		}	
 	}
 
 	

@@ -68,7 +68,7 @@ public class ChangeCO2Dialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(vehicles.getSelectedItem() != null) {
-					setState(1);
+					setStatus(1);
 					setVisible(false);		
 				}
 			}			
@@ -78,7 +78,7 @@ public class ChangeCO2Dialog extends JDialog {
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setState(0);
+				setStatus(0);
 				setVisible(false);
 			}		
 		});
@@ -103,7 +103,7 @@ public class ChangeCO2Dialog extends JDialog {
 	}
 	
 	// Setter Methods
-	private void setState(int n) {
+	private void setStatus(int n) {
 		this.status = n;
 	}
 	

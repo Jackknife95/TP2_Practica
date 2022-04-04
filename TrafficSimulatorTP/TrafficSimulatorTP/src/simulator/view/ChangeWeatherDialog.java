@@ -65,7 +65,7 @@ public class ChangeWeatherDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(roads.getSelectedItem() != null) {
-					setState(1);
+					setStatus(1);
 					setVisible(false);				
 				}
 			}			
@@ -75,7 +75,7 @@ public class ChangeWeatherDialog extends JDialog {
 		cancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setState(0);
+				setStatus(0);
 				setVisible(false);			
 			}		
 		});	
@@ -99,7 +99,7 @@ public class ChangeWeatherDialog extends JDialog {
 	}
 	
 	// Setter Method
-	private void setState(int n) {
+	private void setStatus(int n) {
 		this.state = n;
 	}
 	
