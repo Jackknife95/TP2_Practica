@@ -41,7 +41,9 @@ public class SetWeatherEvent extends Event{
 		}		
 	}
 	//TODO hacer toString?
+
 	public String toString() {
 		return "Weather changed to: ' "+w.get(w.size()-1).getSecond()+" ' in road : " +w.get(w.size()-1).getFirst().toUpperCase();
 	}
+
 }

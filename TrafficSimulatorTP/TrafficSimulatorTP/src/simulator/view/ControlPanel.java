@@ -183,7 +183,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			p.add(new Pair<String, Integer>(dialog.getVehicle().getId(), dialog.getCO2Class()));
 			
 			try {
-				_ctrl.addEvent(new NewSetContClassEvent(time + dialog.getTicks(), p));			
+				_ctrl.addEvent(new NewSetContClassEvent(time + dialog.getTicks(), p));		
 			}
 			catch(IllegalArgumentException i) {
 				throw new IllegalArgumentException(i.getMessage());
