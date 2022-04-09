@@ -24,8 +24,6 @@ public class MainWindow extends JFrame{
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
 		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
 		
-		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
-		
 		JPanel viewsPanel = new JPanel(new GridLayout(1, 2));
 		mainPanel.add(viewsPanel, BorderLayout.CENTER);
 		
@@ -60,8 +58,10 @@ public class MainWindow extends JFrame{
 		mapsPanel.add(mapView);
 		// TODO add a map for MapByRoadComponent
 		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.pack();
+		this.setPreferredSize(new Dimension(1000, 800));
+		this.pack();	// Es importante que se llame antes de setLocationRelativeTo()
+		this.setLocationRelativeTo(null);	// Ajusta la posición del Window en el Centro de la pantalla
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		
 		this.setVisible(true); 
 
 	}
