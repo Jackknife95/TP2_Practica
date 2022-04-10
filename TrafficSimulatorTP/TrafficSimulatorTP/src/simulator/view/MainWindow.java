@@ -57,6 +57,10 @@ public class MainWindow extends JFrame{
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
 		
+		JPanel mapByRoadView = createViewPanel(new MapByRoadComponent(_ctrl), "May by Road");
+		mapByRoadView.setPreferredSize(new Dimension(500, 400));
+		mapsPanel.add(mapByRoadView);
+		
 		this.setPreferredSize(new Dimension(1000, 800));
 		this.pack();	// Es importante que se llame antes de setLocationRelativeTo()
 		this.setLocationRelativeTo(null);	// Ajusta la posición del Window en el Centro de la pantalla
