@@ -22,6 +22,7 @@ import simulator.model.Weather;
 
 public class ChangeWeatherDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private int status;
 	private JComboBox<Road> roads;
 	private DefaultComboBoxModel<Road> roadsModel;

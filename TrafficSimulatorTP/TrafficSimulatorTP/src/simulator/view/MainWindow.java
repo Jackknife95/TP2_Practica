@@ -39,7 +39,6 @@ public class MainWindow extends JFrame{
 		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(eventsView);
-		// TODO add other tables 
 	
 		JPanel vehiclesView = createViewPanel(new JTable(new VehiclesTableModel(_ctrl)), "Vehicles");
 		vehiclesView.setPreferredSize(new Dimension(500, 200));
@@ -52,25 +51,23 @@ public class MainWindow extends JFrame{
 		JPanel junctionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Junctions");
 		vehiclesView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(junctionsView);
+		
 		// maps
 		JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
-		// TODO add a map for MapByRoadComponent
 		
 		this.setPreferredSize(new Dimension(1000, 800));
 		this.pack();	// Es importante que se llame antes de setLocationRelativeTo()
 		this.setLocationRelativeTo(null);	// Ajusta la posición del Window en el Centro de la pantalla
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		
 		this.setVisible(true); 
-
 	}
 	
 	private JPanel createViewPanel(JComponent c, String title) {
-		JPanel p = new JPanel( new BorderLayout() );
-		p.setBorder(new TitledBorder(title));
-		p.add(new JScrollPane(c));
-		return p;
+			JPanel p = new JPanel( new BorderLayout() );
+			p.setBorder(new TitledBorder(title));
+			p.add(new JScrollPane(c));
+			return p;
 		} 
-	
 }

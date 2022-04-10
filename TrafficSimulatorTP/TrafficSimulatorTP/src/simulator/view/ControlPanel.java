@@ -35,6 +35,7 @@ import simulator.model.Weather;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 
+	private static final long serialVersionUID = 1L;
 	private Controller _ctrl;
 	private RoadMap roadMap;
 	private int time;

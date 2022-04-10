@@ -71,7 +71,7 @@ public class Vehicle extends SimulatedObject{
 		}
 		else if(status == VehicleStatus.TRAVELING) {
 			
-			currentSpeed = Math.min(s, maximumSpeed);
+			this.currentSpeed = Math.min(s, maximumSpeed);
 		}	
 	}
 	

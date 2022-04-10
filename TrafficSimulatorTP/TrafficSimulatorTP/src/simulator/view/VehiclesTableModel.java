@@ -13,12 +13,7 @@ import simulator.model.Vehicle;
 
 public class VehiclesTableModel extends AbstractTableModel implements TrafficSimObserver{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	
 	private List<Vehicle> _vehicles;
 	private String[] _colNames = { "Id", "Location", "Itinerary","CO2 Class","Max. Speed","Speed","Total CO2","Distance"};
 
@@ -35,11 +30,6 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 		fireTableDataChanged();;		
 	}
 	
-	public void setVehiclesList(List<Vehicle> vehicle) {
-		_vehicles = vehicle;
-		update();
-	}
-
 	@Override
 	public boolean isCellEditable(int row, int column) {
 		return false;
@@ -85,17 +75,16 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 			s = _vehicles.get(rowIndex).getId();
 			break;
 		case 1:
-			Vehicle v = _vehicles.get(rowIndex);
-			
+			Vehicle v = _vehicles.get(rowIndex);		
 			switch (v.getStatus()) {
 				case PENDING:
 					s = "Pending";
 				break;
 				case TRAVELING:
-					s = v.getRoad().getId() + ":" +v.getLocation();
+					s = v.getRoad().getId() + ":" + v.getLocation();
 				break;
 				case WAITING:
-					s = "Waiting:"+v.getRoad().getDest().getId();
+					s = "Waiting:" + v.getRoad().getDest().getId();
 				break;
 				case ARRIVED:
 					s = "Arrived";
@@ -103,52 +92,55 @@ public class VehiclesTableModel extends AbstractTableModel implements TrafficSim
 			}
 			break;
 		case 2 :
-			s= _vehicles.get(rowIndex).getContClass();
+			s = _vehicles.get(rowIndex).getContClass();
 			break;
 		case 3 :
-			s= _vehicles.get(rowIndex).getMaxSpeed();
+			s = _vehicles.get(rowIndex).getMaxSpeed();
 			break;
 		case 4 :
-			s= _vehicles.get(rowIndex).getSpeed();
+			s = _vehicles.get(rowIndex).getSpeed();
 			break;
 		case 5 :
-			s= _vehicles.get(rowIndex).getTotalCO2();
+			s = _vehicles.get(rowIndex).getTotalCO2();
 			break;
 		case 6 :
-			s= _vehicles.get(rowIndex).getLocation();
+			s = _vehicles.get(rowIndex).getLocation();
 			break;
 		}
-		
 		return s;
 	}
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		setVehiclesList(map.getVehicles());
+		_vehicles = map.getVehicles();
+		update();
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		setVehiclesList(map.getVehicles());
+		_vehicles = map.getVehicles();
+		update();
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		
+		// Do nothing
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		setVehiclesList(map.getVehicles());
+		_vehicles = map.getVehicles();
+		update();
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		setVehiclesList(map.getVehicles());
+		_vehicles = map.getVehicles();
+		update();
 	}
 
 	@Override
 	public void onError(String msg) {
-		
+		// Do nothing
 	}
 }

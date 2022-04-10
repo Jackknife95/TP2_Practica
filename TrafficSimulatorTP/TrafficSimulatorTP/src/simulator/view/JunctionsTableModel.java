@@ -14,12 +14,7 @@ import simulator.model.TrafficSimObserver;
 
 public class JunctionsTableModel extends AbstractTableModel implements TrafficSimObserver {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	
 	private List<Junction> _junctions;
 	private String[] _colNames = { "Id", "Green", "Queues"};
 
@@ -34,11 +29,6 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		
 		// We need to notify changes, otherwise the table does not refresh.
 		fireTableDataChanged();
-	}
-	
-	public void setJunctionList(List<Junction> junction) {
-		_junctions = junction;
-		update();
 	}
 
 	@Override
@@ -70,17 +60,14 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		return _junctions == null ? 0 : _junctions.size();
 	}
 
-
 	// "Id", "Green", "Queues".
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		String s = "";
 		Junction j = _junctions.get(rowIndex);
-		switch ( columnIndex ) {
-		
+		switch ( columnIndex ) {	
 			case 0:
 				s = j.getId();
-				break;
-			
+				break;		
 			case 1:
 				s = j.getGreenLightIndex() == -1 ? //
 				"NONE" : //
@@ -99,39 +86,35 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		setJunctionList(map.getJunctions());
-		
+		_junctions = map.getJunctions();
+		update();
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		
-		setJunctionList(map.getJunctions());
-		
+		_junctions = map.getJunctions();
+		update();
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
-		
+		// Do Nothing
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		setJunctionList(map.getJunctions());
-		
+		_junctions = map.getJunctions();
+		update();
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		setJunctionList(map.getJunctions());
-		
-		
+		_junctions = map.getJunctions();
+		update();
 	}
 
 	@Override
 	public void onError(String msg) {
-		// TODO Auto-generated method stub
-		
+		// Do Nothing	
 	}
 }

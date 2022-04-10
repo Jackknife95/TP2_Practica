@@ -13,12 +13,7 @@ import simulator.model.TrafficSimObserver;
 
 public class RoadsTableModel extends AbstractTableModel implements TrafficSimObserver {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	
 	private List<Road> _roads;
 	private String[] _colNames = { "Id", "Length", "Weather","Max. Speed","Speed Limit","Total CO2","CO2 Limit"};
 
@@ -33,11 +28,6 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 		
 		// We need to notify changes, otherwise the table does not refresh.
 		fireTableDataChanged();		
-	}
-	
-	public void setRoadsList(List<Road> road) {
-		_roads = road;
-		update();
 	}
 
 	@Override
@@ -71,8 +61,8 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 
 	@Override
 	// metodo obligatorio
-	// así es como se va a cargar la tabla desde el ArrayList
-	// el índice del arrayList es el número de fila pq en este ejemplo
+	// asi es como se va a cargar la tabla desde el ArrayList
+	// el indice del arrayList es el numero de fila pq en este ejemplo
 	// quiero enumerarlos.
 	//
 	// returns the value of a particular cell 
@@ -108,37 +98,36 @@ public class RoadsTableModel extends AbstractTableModel implements TrafficSimObs
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		setRoadsList(map.getRoads());
+		_roads = map.getRoads();
+		update();
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		setRoadsList(map.getRoads());
-		
+		_roads = map.getRoads();
+		update();
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
-		
+		// Do Nothing
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		setRoadsList(map.getRoads());
+		_roads = map.getRoads();
+		update();
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		setRoadsList(map.getRoads());
+		_roads = map.getRoads();
+		update();
 	}
 
 	@Override
 	public void onError(String msg) {
-		// TODO Auto-generated method stub
+		// Do Nothing
 		
 	}
 }

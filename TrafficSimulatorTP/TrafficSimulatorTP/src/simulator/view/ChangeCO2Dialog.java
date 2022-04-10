@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import simulator.model.RoadMap;
@@ -22,6 +21,7 @@ import simulator.model.Vehicle;
 
 public class ChangeCO2Dialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private int status;	
 	private JComboBox<Vehicle> vehicles;
 	private DefaultComboBoxModel<Vehicle> vehiclesModel;
