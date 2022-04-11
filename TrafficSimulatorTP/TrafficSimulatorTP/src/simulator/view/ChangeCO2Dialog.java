@@ -53,7 +53,7 @@ public class ChangeCO2Dialog extends JDialog {
 		
 		// Añadimos los números de la clase de contaminación
 		for(int i = 0; i < 10; i++) {
-			contClassModel.addElement(new Integer(i+1));
+			contClassModel.addElement(i+1);
 		}
 		
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Crea espacio en altura

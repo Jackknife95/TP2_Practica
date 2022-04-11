@@ -243,8 +243,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			});
 		} 
 		else {
-		enableToolBar(true);
-		_stopped = true;
+		stop_sim();
+		//enableToolBar(true);
+		//_stopped = true;
 		}
 	}
 	

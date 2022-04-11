@@ -64,7 +64,7 @@ public class MainWindow extends JFrame{
 		this.setPreferredSize(new Dimension(1000, 800));
 		this.pack();	// Es importante que se llame antes de setLocationRelativeTo()
 		this.setLocationRelativeTo(null);	// Ajusta la posición del Window en el Centro de la pantalla
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);		//hace que el boton de cerrar no haga nada, para cerrar al pulsar poner EXIT_ON_CLOSE
 		this.setVisible(true); 
 	}
 	
