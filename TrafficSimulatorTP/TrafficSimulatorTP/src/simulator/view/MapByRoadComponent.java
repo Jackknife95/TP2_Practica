@@ -140,7 +140,6 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
 			int A = r.getTotalCO2();
 			int B = r.getContLimit();
 			int C = (int) Math.floor(Math.min((double) A/(1.0 + (double) B),1.0) / 0.19);
-			//System.out.println(C);
 			g.drawImage(_contImage.get(C), x2+45, y-18, 32, 32, this);
 			y += 50;
 		}
