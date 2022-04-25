@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import simulator.model.RoadMap;
@@ -22,6 +21,7 @@ import simulator.model.Vehicle;
 
 public class ChangeCO2Dialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private int status;	
 	private JComboBox<Vehicle> vehicles;
 	private DefaultComboBoxModel<Vehicle> vehiclesModel;
@@ -30,7 +30,7 @@ public class ChangeCO2Dialog extends JDialog {
 	private JSpinner ticks;
 	
 	public ChangeCO2Dialog (JFrame frame){
-		super(frame,true);
+		super(frame, true);
 		status = 0;
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -46,13 +46,14 @@ public class ChangeCO2Dialog extends JDialog {
 		JPanel panel2 = new JPanel();
 		vehiclesModel = new DefaultComboBoxModel<Vehicle>();
 		contClassModel = new DefaultComboBoxModel<Integer>();
+		
 		vehicles = new JComboBox<Vehicle>(vehiclesModel);
 		contClass = new JComboBox<Integer>(contClassModel);	
 		ticks = new JSpinner(new  SpinnerNumberModel(1, 1, 100, 1));		
 		
 		// Añadimos los números de la clase de contaminación
 		for(int i = 0; i < 10; i++) {
-			contClassModel.addElement(new Integer(i+1));
+			contClassModel.addElement(i+1);
 		}
 		
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Crea espacio en altura
@@ -73,7 +74,6 @@ public class ChangeCO2Dialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(vehiclesModel.getSelectedItem() != null) {
-					System.out.println("Entra en el if");
 					status = 1;
 					ChangeCO2Dialog.this.setVisible(false);		
 				}
@@ -100,20 +100,13 @@ public class ChangeCO2Dialog extends JDialog {
 	
 	
 	public int open(RoadMap roadMap) {
-		System.out.println("Dentro del Open");
-		vehiclesModel.removeAllElements();
+		
+		vehiclesModel.removeAllElements();		
 		for(Vehicle v : roadMap.getVehicles()) {
 			vehiclesModel.addElement(v);
 		}
-		System.out.println("Despues del for");
 		setVisible(true);		
-		System.out.println(status);
 		return this.status;
-	}
-	
-	// Setter Methods
-	private void setStatus(int n) {
-		this.status = n;
 	}
 	
 	// Getter Methods

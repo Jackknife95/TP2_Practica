@@ -35,6 +35,7 @@ import simulator.model.Weather;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 
+	private static final long serialVersionUID = 1L;
 	private Controller _ctrl;
 	private RoadMap roadMap;
 	private int time;
@@ -141,7 +142,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int ret = JOptionPane.showOptionDialog(ControlPanel.this, "Are you sure you want to quit?", "Quit Simulator",
+				int ret = JOptionPane.showOptionDialog(null, "Are you sure you want to quit?", "Quit Simulator",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 			
 				if(ret == JOptionPane.YES_OPTION) {
@@ -154,6 +155,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	private void loadFile()  {
 		_fileChooser = new JFileChooser();
+		_fileChooser.setCurrentDirectory(new File("."));
+		
 		int ret = _fileChooser.showOpenDialog(null);
 		
 		if(ret == JFileChooser.APPROVE_OPTION) {
@@ -176,12 +179,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private void changeCO2Class() {
 		
 		ChangeCO2Dialog dialog = new ChangeCO2Dialog((JFrame)SwingUtilities.getWindowAncestor(this));
+		dialog.setLocationRelativeTo(null);
 		int ret = dialog.open(roadMap);			
-		System.out.println("ret = " + ret);
+
 		if(ret == 1) {
 			List<Pair<String, Integer>> p = new ArrayList<Pair<String,Integer>>();
 			p.add(new Pair<String, Integer>(dialog.getVehicle().getId(), dialog.getCO2Class()));
-			System.out.println(dialog.getVehicle().getId() + " " + dialog.getCO2Class());
+
 			try {
 				_ctrl.addEvent(new NewSetContClassEvent(time + dialog.getTicks(), p));		
 			}
@@ -193,7 +197,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	
 	private void changeWeather() {
-		ChangeWeatherDialog dialog = new ChangeWeatherDialog();
+		ChangeWeatherDialog dialog = new ChangeWeatherDialog((JFrame)SwingUtilities.getWindowAncestor(this));
+		dialog.setLocationRelativeTo(null);
 		int ret = dialog.open(roadMap);
 		
 		if(ret == 1) {
@@ -238,8 +243,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			});
 		} 
 		else {
+
 		enableToolBar(true);
 		stop_sim();
+
 		}
 	}
 	

@@ -24,8 +24,6 @@ public class MainWindow extends JFrame{
 		mainPanel.add(new ControlPanel(_ctrl), BorderLayout.PAGE_START);
 		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
 		
-		mainPanel.add(new StatusBar(_ctrl),BorderLayout.PAGE_END);
-		
 		JPanel viewsPanel = new JPanel(new GridLayout(1, 2));
 		mainPanel.add(viewsPanel, BorderLayout.CENTER);
 		
@@ -41,7 +39,6 @@ public class MainWindow extends JFrame{
 		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
 		eventsView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(eventsView);
-		// TODO add other tables 
 	
 		JPanel vehiclesView = createViewPanel(new JTable(new VehiclesTableModel(_ctrl)), "Vehicles");
 		vehiclesView.setPreferredSize(new Dimension(500, 200));
@@ -54,23 +51,27 @@ public class MainWindow extends JFrame{
 		JPanel junctionsView = createViewPanel(new JTable(new JunctionsTableModel(_ctrl)), "Junctions");
 		vehiclesView.setPreferredSize(new Dimension(500, 200));
 		tablesPanel.add(junctionsView);
+		
 		// maps
 		JPanel mapView = createViewPanel(new MapComponent(_ctrl), "Map");
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
-		// TODO add a map for MapByRoadComponent
 		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.pack();
+		JPanel mapByRoadView = createViewPanel(new MapByRoadComponent(_ctrl), "May by Road");
+		mapByRoadView.setPreferredSize(new Dimension(500, 400));
+		mapsPanel.add(mapByRoadView);
+		
+		this.setPreferredSize(new Dimension(1000, 800));
+		this.pack();	// Es importante que se llame antes de setLocationRelativeTo()
+		this.setLocationRelativeTo(null);	// Ajusta la posición del Window en el Centro de la pantalla
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);		//hace que el boton de cerrar no haga nada, para cerrar al pulsar poner EXIT_ON_CLOSE
 		this.setVisible(true); 
-
 	}
 	
 	private JPanel createViewPanel(JComponent c, String title) {
-		JPanel p = new JPanel( new BorderLayout() );
-		p.setBorder(new TitledBorder(title));
-		p.add(new JScrollPane(c));
-		return p;
+			JPanel p = new JPanel( new BorderLayout() );
+			p.setBorder(new TitledBorder(title));
+			p.add(new JScrollPane(c));
+			return p;
 		} 
-	
 }

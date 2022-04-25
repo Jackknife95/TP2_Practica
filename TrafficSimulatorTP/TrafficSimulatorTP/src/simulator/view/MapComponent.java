@@ -24,9 +24,7 @@ import simulator.model.VehicleStatus;
 public class MapComponent extends JPanel implements TrafficSimObserver {
 
 	private static final long serialVersionUID = 1L;
-
 	private static final int _JRADIUS = 10;
-
 	private static final Color _BG_COLOR = Color.WHITE;
 	private static final Color _JUNCTION_COLOR = Color.BLUE;
 	private static final Color _JUNCTION_LABEL_COLOR = new Color(200, 100, 0);
@@ -34,12 +32,11 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 	private static final Color _RED_LIGHT_COLOR = Color.RED;
 
 	private RoadMap _map;
-
 	private Image _car;
 
 	MapComponent(Controller ctrl) {
-		initGUI();
 		ctrl.addObserver(this);
+		initGUI();	
 	}
 
 	private void initGUI() {
@@ -97,7 +94,6 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 			// color roadColor. The size of the arrow is 15px length and 5 px width
 			drawLineWithArrow(g, x1, y1, x2, y2, 15, 5, roadColor, arrowColor);
 		}
-
 	}
 
 	private void drawVehicles(Graphics g) {

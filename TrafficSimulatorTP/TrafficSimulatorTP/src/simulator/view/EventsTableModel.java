@@ -11,12 +11,7 @@ import simulator.model.TrafficSimObserver;
 
 public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	
 	private List<Event> _events;
 	private String[] _colNames = { "Time", "Desc." };
 
@@ -26,18 +21,13 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	public void update() {
 		// observar que si no refresco la tabla no se carga
-		// La tabla es la represantación visual de una estructura de datos,
+		// La tabla es la represantacio�n visual de una estructura de datos,
 		// en este caso de un ArrayList, hay que notificar los cambios.
 		
 		// We need to notify changes, otherwise the table does not refresh.
 		fireTableDataChanged();	
 	}
 	
-	public void setEventsList(List<Event> events) {
-		_events =events;
-		update();
-	}
-
 	@Override
 	public boolean isCellEditable(int row, int column) {
 		return false;
@@ -69,8 +59,8 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	// metodo obligatorio
-	// así es como se va a cargar la tabla desde el ArrayList
-	// el índice del arrayList es el número de fila pq en este ejemplo
+	// asi es como se va a cargar la tabla desde el ArrayList
+	// el indice del arrayList es el numero de fila pq en este ejemplo
 	// quiero enumerarlos.
 	//
 	// returns the value of a particular cell 
@@ -95,38 +85,36 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
+		// Do Nothing	
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		_events =events;
-		fireTableDataChanged();
+		_events = events;
+		update();
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
-		setEventsList(events);
+		_events = events;
+		update();
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		setEventsList(events);
+		_events = events;
+		update();
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		setEventsList(events);
+		_events = events;
+		update();
 	}
 
 	@Override
 	public void onError(String msg) {
-		// TODO Auto-generated method stub
+		// Do Nothing
 		
 	}
 }

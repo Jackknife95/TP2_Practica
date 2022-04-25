@@ -1,5 +1,6 @@
 package simulator.view;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
 
@@ -40,13 +41,14 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 		this.setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		tiempo_sim = new JLabel("Time: " + time);
-		JSeparator separator = new JSeparator();
-		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setVisible(true);
 		event_msg = new JLabel(eventMessage);
 		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setPreferredSize(new Dimension(5, 20));
+		
 		this.add(tiempo_sim);
-		this.add(Box.createHorizontalStrut(150));
+		this.add(Box.createHorizontalStrut(80));
 		this.add(separator);
 		this.add(event_msg);	
 	}
@@ -55,24 +57,32 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		this.time = time;
 		this.eventMessage = "";	
+		tiempo_sim.setText("Time: " + time);
+		event_msg.setText("");
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
 		this.time = time;
 		this.eventMessage = "";		
+		tiempo_sim.setText("Time: " + time);
+		event_msg.setText("");
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
 		this.time = time;
 		this.eventMessage = "Event added " + "(" + e.toString() + ")";	
+		tiempo_sim.setText("Time: " + time);
+		event_msg.setText(eventMessage);
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
 		this.time = 0;
 		this.eventMessage = "";		
+		tiempo_sim.setText("Time: " + time);
+		event_msg.setText("");
 	}
 
 	@Override
