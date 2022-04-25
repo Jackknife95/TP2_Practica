@@ -224,7 +224,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		if (n > 0 && !_stopped) {
 				
 			try {
-				_ctrl.run(n);
+				_ctrl.run(1);
 			} catch (Exception e) {
 				this._stopped = true;
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Error Message", JOptionPane.WARNING_MESSAGE);
@@ -239,7 +239,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		} 
 		else {
 		enableToolBar(true);
-		_stopped = true;
+		stop_sim();
 		}
 	}
 	
